@@ -1,6 +1,7 @@
 // $Id: sexp.c,v 1.19 2002/10/22 20:33:19 Administrator Exp $
 
 #include <stdarg.h>
+#include <string.h>
 
 #include "fstrm.h"
 #include "mem.h"
@@ -24,7 +25,7 @@ static sexp_heap *new_sexp_heap( void )
 {
   sexp_heap *sh = malik( sizeof( sexp_heap ) );
 
-  A(!(((int)sh)&SEXP_TAG_BIT_MASK)); // must have tag bits empty
+  A(!(((long)sh)&SEXP_TAG_BIT_MASK)); // must have tag bits empty
 
   sh->properties = nil;
 

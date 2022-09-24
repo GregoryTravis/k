@@ -36,7 +36,7 @@ typedef enum sexp_types {
   SEXP_MAX=SEXP_STRING
 } sexp_types ;
 
-typedef int sexp;
+typedef long sexp;
 
 typedef struct hashentry {
   char *name;
