@@ -139,7 +139,13 @@ typedef struct sexp_heap {
 #define SEXP_GET_CLOSURE_NAME(s) (A(SEXP_IS_CLOSURE((s))),(((sexp_heap*)(s))->contents.closure.name))
 #define SEXP_GET_STRING(s) (A(SEXP_IS_STRING((s))),(((sexp_heap*)(s))->contents.string.string))
 
-#define SEXP_PROPERTIES(s) (A((s) && !SEXP_IS_MANIFEST((s))),(((sexp_heap*)(s))->properties))
+/* #define SEXP_PROPERTIES(s) (A((s) && !SEXP_IS_MANIFEST((s))),(((sexp_heap*)(s))->properties)) */
+#define SEXP_PROPERTIES(s) (*(sexp_properties((s))))
+sexp *sexp_properties(sexp s)
+{
+  A((s) && !SEXP_IS_MANIFEST((s)));
+  return &(((sexp_heap*)(s))->properties);
+}
 
 #define SEXP_STRING_LENGTH(s) (strlen(SEXP_GET_STRING((s))))
 
@@ -149,8 +155,22 @@ typedef struct sexp_heap {
                    (!strcmp(STR((s0)),STR((s1)))) : ((s0)==(s1)))
 
 sexp cons( sexp car, sexp cdr );
-#define car(s) (A(SEXP_IS_CONS((s))),SEXP_HEAP((s))->contents.cons.car)
-#define cdr(s) (A(SEXP_IS_CONS((s))),SEXP_HEAP((s))->contents.cons.cdr)
+/* #define car(s) (A(SEXP_IS_CONS((s))),SEXP_HEAP((s))->contents.cons.car) */
+/* #define cdr(s) (A(SEXP_IS_CONS((s))),SEXP_HEAP((s))->contents.cons.cdr) */
+
+sexp *_car(sexp s)
+{
+  A(SEXP_IS_CONS((s)));
+  return &(SEXP_HEAP((s))->contents.cons.car);
+}
+#define car(s) (*(_car(s))
+
+sexp *_cdr(sexp s)
+{
+  A(SEXP_IS_CONS((s)));
+  return &(SEXP_HEAP((s))->contents.cons.cdr);
+}
+#define cdr(s) (*(_cdr(s))
 
 /*
 #define caar(s) (car(car((s))))

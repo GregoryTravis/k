@@ -13,7 +13,7 @@ my $flag_verbose_bison = 0;
 my $flag_debug_bison = 0;
 my $flag_debug_flex = 0;
 
-my $dos = 1;
+my $dos = 0;
 my $whitespace_regex = " \\t\\n";
 $whitespace_regex .= "\015" if ($dos);
 $whitespace_regex = "[$whitespace_regex]";
@@ -408,6 +408,7 @@ sub generate_yacc_and_lex {
   print yacc <<EOF;
 %{
 #include <stdio.h>
+#include <string.h>
 #include "mem.h"
 #include "sexp.h"
 #define YYDEBUG 1
@@ -421,6 +422,7 @@ extern int __${stub}_token_start_gchar, __${stub}_token_end_gchar;
 extern sexp __${stub}_where_stamp( void );
 extern char *__${stub}_strdoop_no_quotes( char *string );
 sexp _ccc_top=0;
+int yylex();
 %}
 
 %union {
@@ -636,7 +638,7 @@ sexp ${stub}_parse( char *filename, FILE *instream )
 }
 void yyerror( char *s )
 {
-  fprintf( stderr, "Syntax error at line %d, char %d\n",
+  fprintf( stderr, "Syntax error at line %d, char %d\\n",
     __${stub}_token_start_line, __${stub}_token_start_char );
 }
 int yywrap()
