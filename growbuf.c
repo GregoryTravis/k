@@ -1,6 +1,7 @@
 // $Id: growbuf.c,v 1.3 2002/10/08 16:04:31 Administrator Exp $
 
 #include <stdio.h>
+#include <string.h>
 
 #include "a.h"
 #include "growbuf.h"

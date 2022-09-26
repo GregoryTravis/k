@@ -1,5 +1,7 @@
 // $Id: kenv.c,v 1.7 2002/10/22 19:16:48 Administrator Exp $
 
+#include <string.h>
+
 #include "kenv.h"
 #include "kerr.h"
 

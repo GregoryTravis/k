@@ -32,6 +32,24 @@ static sexp_heap *new_sexp_heap( void )
   return sh;
 }
 
+sexp *_car(sexp s)
+{
+  A(SEXP_IS_CONS((s)));
+  return &(SEXP_HEAP((s))->contents.cons.car);
+}
+
+sexp *_cdr(sexp s)
+{
+  A(SEXP_IS_CONS((s)));
+  return &(SEXP_HEAP((s))->contents.cons.cdr);
+}
+
+sexp *sexp_properties(sexp s)
+{
+  A((s) && !SEXP_IS_MANIFEST((s)));
+  return &(((sexp_heap*)(s))->properties);
+}
+
 sexp cons( sexp car, sexp cdr )
 {
   sexp_heap *pair;
@@ -110,6 +128,7 @@ static void print_spaces( ostrm *ost, int n )
 // advance: the number of chars we have printed on this line
 static void pprint( ostrm *ost, sexp s, int indent, int *advance, int *did_newline, int oneline )
 {
+  // printf("hey %lx\n", s);
   A(SEXP_OK(s));
   A(advance);
 

@@ -1,5 +1,7 @@
 // $Id: kps.c,v 1.29 2002/10/22 19:16:49 Administrator Exp $
 
+#include <string.h>
+
 #include "kerr.h"
 #include "kmisc.h"
 #include "kps.h"

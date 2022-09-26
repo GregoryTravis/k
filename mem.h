@@ -3,7 +3,7 @@
 #ifndef _mem_h_
 #define _mem_h_
 
-#define MEM_USE_GC
+// #define MEM_USE_GC
 
 #define malik(size) (malik_actual(__FILE__,__LINE__,(size)))
 #define realik(mem,size) (realik_actual(__FILE__,__LINE__,(mem),(size)))

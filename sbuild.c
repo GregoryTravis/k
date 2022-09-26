@@ -1,6 +1,7 @@
 // $Id: sbuild.c,v 1.4 2002/08/29 23:23:55 Administrator Exp $
 
 #include <stdarg.h>
+#include <string.h>
 
 #include "mem.h"
 

@@ -1,5 +1,7 @@
 // $Id: ksem.c,v 1.12 2002/10/11 20:55:21 Administrator Exp $
 
+#include <string.h>
+
 #include "sexputil.h"
 
 #include "ksem.h"

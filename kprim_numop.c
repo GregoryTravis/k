@@ -1,5 +1,7 @@
 // $Id: kprim_numop.c,v 1.5 2002/10/08 18:43:00 Administrator Exp $
 
+#include <string.h>
+
 #include "mem.h"
 
 #include "kprim_numop.h"

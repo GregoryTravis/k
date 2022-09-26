@@ -43,6 +43,13 @@ static sexp feval( sexp env, sexp exp )
 {
   sexp s, ss, sss;
 
+  /* printf("feval\n"); */
+  /* sexp_pp(exp); */
+  /* printf("\n"); */
+  /* sexp_pp(env); */
+  /* printf("\n"); */
+  /* printf("\n"); */
+
   A(SEXP_OK( env ));
   A(SEXP_OK( exp ));
 
@@ -101,6 +108,10 @@ static sexp feval( sexp env, sexp exp )
     KERRPUNTV(nil);
     return val2;
   } else if (sexp_scan( exp, "(fshow % %)", &s, &ss )) {
+    /* printf("fshow\n"); */
+    /* sexp_pp(exp); */
+    /* printf("\n"); */
+
     sexp kont = s;
     sexp val = ss;
     sexp funcall;
