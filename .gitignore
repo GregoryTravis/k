@@ -1,1 +1,17 @@
+*.o
+*.cps.out
+*.parse.out
+*.presem.out
+*.postsem.out
+*.reasons.out
+*.output
+*.l
+*.y
+*.grammar
+*.tab.h
+*.tab.c
+*.yy.c
+kp.h
+k
+misc
 out
