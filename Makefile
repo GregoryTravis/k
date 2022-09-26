@@ -1,6 +1,6 @@
 # $Id: Makefile,v 1.17 2002/10/08 18:42:59 Administrator Exp $
 
-CFLAGS = -g -Wreturn-type -Werror-implicit-function-declaration
+CFLAGS = -g -Wreturn-type -Werror-implicit-function-declaration # -Wno-unused-value
 LDFLAGS = -g
 
 SEXP_OBJS = sexp.o sbuild.o sparse.o
@@ -21,10 +21,12 @@ GENERATED = k.exe shavtest.exe *.o $(PARSER_GENERATED)
 COMMON_DEPS = kstruct.h
 
 k: $(K_OBJS)
-	gcc -Lgc6.0/.libs $(LDFLAGS) -o k $(K_OBJS) -lgc
+	@# gcc -Lgc6.0/.libs $(LDFLAGS) -o k $(K_OBJS) -lgc
+	gcc $(LDFLAGS) -o k $(K_OBJS)
 
 shavtest: shavtest.o shav.o mem.o spew.o
-	gcc -Lgc6.0/.libs $(LDFLAGS) -o shavtest shavtest.o shav.o mem.o spew.o -lgc
+	@# gcc -Lgc6.0/.libs $(LDFLAGS) -o shavtest shavtest.o shav.o mem.o spew.o -lgc
+	gcc $(LDFLAGS) -o shavtest shavtest.o shav.o mem.o spew.o
 
 clean:
 	rm -f $(GENERATED)

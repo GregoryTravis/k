@@ -97,7 +97,7 @@ static void show_where( FILE *file, sexp where )
     fprintf( file, ": " );
 
   } else {
-    fprintf( file, "Bad where info: %d %d\n", where, locinfo );
+    fprintf( file, "Bad where info: %ld %ld\n", where, locinfo );
     sexp_dump_stream( file, where );
   }
 }

@@ -97,7 +97,7 @@ void kenv_global_put_env( sexp env, sexp name, sexp value )
 
   pair = assoc( name, cdr( global ) );
 
-  if (pair = nil) {
+  if (pair == nil) {
     add_pair_to_layer( global, cons( name, value ) );
   } else {
     setcdr( pair, value );

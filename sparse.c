@@ -108,7 +108,7 @@ static sexp sexp_parse_string( char *string, char **next )
       length = 0;
       scanning = 0;
     } else {
-      *nus==0;
+      *nus=0;
       A(nus-nustring == s-string && s-string==length);
     }
   } // outer

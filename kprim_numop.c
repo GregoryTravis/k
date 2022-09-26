@@ -253,7 +253,7 @@ sexp numop_plus( sexp arglist )
       if (other_type==SEXP_INTEGER) {
         sprintf( buf, "%d", SEXP_GET_INTEGER(other) );
       } else if (other_type==SEXP_FLOAT) {
-        sprintf( buf, "%d", SEXP_GET_FLOAT(other) );
+        sprintf( buf, "%f", SEXP_GET_FLOAT(other) );
       } else if (other_type==SEXP_SYMBOL) {
         sprintf( buf, "%s", STR(other) );
       } else {
