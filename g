@@ -2,6 +2,10 @@
 L out
 exit
 
+(rm kps.o && make kps.o) 2>&1 | tee out
+L out
+exit
+
 (make && k small.k) 2>&1 | tee out
 exit
 

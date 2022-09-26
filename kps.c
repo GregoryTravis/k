@@ -66,10 +66,7 @@ static sexp pts( sexp p )
   } else if (sexp_scan( p, "(expression integer %)", &s )) {
     int i;
     if (!sscanf( STR(s), "%d", &i )) {
-      // printf( "Can't parse integer %s\n", STR( s ) );
-      // spew(( "Can't parse integer %s\n", STR( s ) ));
       err(( "Can't parse integer %s\n", STR( s ) ));
-      // err_do ( "Can't parse integer %s\n", ((((((((s)))&((1<<((2)))-1)) ? (( ((((s)))&(0x01)) == (0x01) ) ? (SEXP_INTEGER) : (( ((((s)))&(0x02)) == (0x02) ) ? (SEXP_FLOAT) : ((0) ? 0 : (err_do ( "Assert %s %d: %s\n", "kps.c", 69, "0" ),0) ))) : (((((((s)))) ? 0 : (err_do ( "Assert %s %d: %s\n", "kps.c", 69, "(((s)))" ),0) ),((sexp_heap*)((((s)))))->type)))==SEXP_SYMBOL)),(((sexp_heap*)((s)))->contents.symbol.name)) );
     }
     s = SEXP_MKINT( i );
     return sexp_build( "(const %)", s );

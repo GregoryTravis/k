@@ -145,7 +145,7 @@ extern sexp *sexp_properties(sexp s);
 
 #define SEXP_STRING_LENGTH(s) (strlen(SEXP_GET_STRING((s))))
 
-#define STR(s) (SEXP_IS_SYMBOL(s),(SEXP_HEAP((s))->contents.symbol.name))
+#define STR(s) (A(SEXP_IS_SYMBOL(s)),(SEXP_HEAP((s))->contents.symbol.name))
 #define S(s) (mksym(#s))
 #define EQ(s0,s1) ((SEXP_IS_SYMBOL((s0))&&SEXP_IS_SYMBOL((s1))) ? \
                    (!strcmp(STR((s0)),STR((s1)))) : ((s0)==(s1)))

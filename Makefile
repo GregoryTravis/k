@@ -1,6 +1,6 @@
 # $Id: Makefile,v 1.17 2002/10/08 18:42:59 Administrator Exp $
 
-CFLAGS = -g -Wreturn-type -Werror-implicit-function-declaration # -Wno-unused-value
+CFLAGS = -g -Wreturn-type -Werror-implicit-function-declaration
 LDFLAGS = -g
 
 SEXP_OBJS = sexp.o sbuild.o sparse.o
