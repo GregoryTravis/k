@@ -30,6 +30,7 @@ void kprim_add_prims( sexp env )
   ADDPRIM( env, cons );
   ADDPRIM( env, car );
   ADDPRIM( env, cdr );
+  ADDPRIM( env, assoc );
   ADDPRIM( env, import );
 
   ADDPRIM( env, closure_get_code );

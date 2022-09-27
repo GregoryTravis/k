@@ -8,5 +8,6 @@
 DECLPRIM(cons);
 DECLPRIM(car);
 DECLPRIM(cdr);
+DECLPRIM(assoc);
 
 #endif /* _kprim_list_h_ */

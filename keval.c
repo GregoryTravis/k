@@ -108,10 +108,6 @@ static sexp feval( sexp env, sexp exp )
     KERRPUNTV(nil);
     return val2;
   } else if (sexp_scan( exp, "(fshow % %)", &s, &ss )) {
-    /* printf("fshow\n"); */
-    /* sexp_pp(exp); */
-    /* printf("\n"); */
-
     sexp kont = s;
     sexp val = ss;
     sexp funcall;
@@ -121,6 +117,7 @@ static sexp feval( sexp env, sexp exp )
     KERRPUNTV(nil);
 
     sexp_dump( val );
+    // SD(val);
     fflush( stdout );
 
     funcall = sexp_build( "(tramp % ())", kont );

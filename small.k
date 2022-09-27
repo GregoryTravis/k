@@ -1,18 +1,28 @@
-fun foo()
+fun objectlookup(name, type, obj)
 {
-  show "asdfasdf\n";
-  return 1;
-}
-
-// foo();
-
-fun fib(n)
-{
-  if (n == 0) {
-    return 1;
+  var gs = assoc(name, obj);
+  if (gs == nil) {
+    show "nil";
+    panic();
   } else {
-    return n * fib(n-1);
+    var v = assoc(type, cdr(gs));
+    if (v == nil) {
+      panic();
+    } else {
+      return cdr(v);
+    }
   }
 }
 
-show fib(10);
+class ssink
+{
+  public fun ssink() {
+  }
+
+  public fun foo(n) {
+    return n * 2;
+  }
+}
+
+var x = new ssink();
+show x.foo(12);

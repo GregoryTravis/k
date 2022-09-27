@@ -4,6 +4,7 @@
 
 #include "kerr.h"
 #include "kprim_list.h"
+#include "sexp.h"
 
 DEFPRIM(cons)
 {
@@ -22,8 +23,6 @@ DEFPRIM(cons)
 
 DEFPRIM(car)
 {
-  sexp a, d;
-
   A(arglist);
 
   if (length( arglist ) != 1) {
@@ -38,8 +37,6 @@ DEFPRIM(car)
 
 DEFPRIM(cdr)
 {
-  sexp a, d;
-
   A(arglist);
 
   if (length( arglist ) != 1) {
@@ -49,5 +46,22 @@ DEFPRIM(cdr)
   } else {
     sexp p = car( arglist );
     return cdr( p );
+  }
+}
+
+DEFPRIM(assoc)
+{
+  // sexp a, d;
+
+  A(arglist);
+
+  if (length( arglist ) != 2) {
+    kerr( "Wrong number of args for arglist!" );
+    KERRPUNTV(nil);
+    return nil;
+  } else {
+    sexp key = car( arglist );
+    sexp alist = cadr( arglist );
+    return assoc(key, alist);
   }
 }
