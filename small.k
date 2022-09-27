@@ -22,9 +22,15 @@ class ssink
   }
 
   public fun foo(n) {
-    return n * 2 + q;
+    return n * 2 + q + bar();
+  }
+
+  public fun bar() {
+    return 10000;
   }
 }
 
 var x = new ssink();
+show x.foo(12);
+x.q = 100;
 show x.foo(12);
