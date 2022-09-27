@@ -16,11 +16,13 @@ fun objectlookup(name, type, obj)
 
 class ssink
 {
+  public var q = 10;
+
   public fun ssink() {
   }
 
   public fun foo(n) {
-    return n * 2;
+    return n * 2 + q;
   }
 }
 
