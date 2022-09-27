@@ -41,4 +41,25 @@ class bap
 {
   public fun bap() {
   }
+
+  public fun aa(n) {
+    if (n <= 0) {
+      return;
+    }
+    show "aa";
+    show n;
+    bb(n-1);
+  }
+
+  public fun bb(n) {
+    if (n <= 0) {
+      return;
+    }
+    show "bb";
+    show n;
+    aa(n-1);
+  }
 }
+
+var y = new bap();
+y.aa(20);
