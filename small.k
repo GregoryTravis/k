@@ -17,12 +17,14 @@ fun objectlookup(name, type, obj)
 class ssink
 {
   public var q = 10;
+  public var r = 0;
 
-  public fun ssink() {
+  public fun ssink(_r) {
+    r = _r;
   }
 
   public fun foo(n) {
-    return n * 2 + q + bar();
+    return n * 2 + q + bar() + r;
   }
 
   public fun bar() {
@@ -30,7 +32,13 @@ class ssink
   }
 }
 
-var x = new ssink();
+var x = new ssink(800);
 show x.foo(12);
 x.q = 100;
 show x.foo(12);
+
+class bap
+{
+  public fun bap() {
+  }
+}
