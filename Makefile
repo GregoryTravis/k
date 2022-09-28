@@ -24,7 +24,7 @@ UMM_K_OBJS = kfile.o keval.o kp.yy.o kp.tab.o kps.o kmisc.o kerr.o \
 
 PARSER_GENERATED = kp.c kp.output kp.tab.c kp.tab.h kp.exe kp.grammar \
   kp.y kp.l kp.yy.c kp.h kp.yy.c
-GENERATED = k.exe shavtest.exe *.o $(PARSER_GENERATED)
+GENERATED = k k.a engine shavtest *.o $(PARSER_GENERATED)
 COMMON_DEPS = kstruct.h
 
 ENGINE_OBJS = engine.o KActor.o
