@@ -774,8 +774,9 @@ sub build {
 
   &cmd( "bison $bison_args -d $stub.y" ) || die $!;
   &cmd( "flex $flex_args $stub.l" ) || die $!;
-  &cmd( "gcc -g -o $yyofile -c $yycfile" ) || die $!;
-  &cmd( "gcc -g -o $tabofile -c $tabcfile" ) || die $!;
+  # Done by makefile now, cuz who knows what flags should be used
+  # &cmd( "gcc -g -o $yyofile -c $yycfile" ) || die $!;
+  # &cmd( "gcc -g -o $tabofile -c $tabcfile" ) || die $!;
 }
 
 sub build_test {
