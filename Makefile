@@ -2,18 +2,22 @@
 
 UNREAL_FLAGS = -mmacosx-version-min=10.15
 CFLAGS = -g -Wreturn-type -Werror-implicit-function-declaration $(UNREAL_FLAGS)
+CPPFLAGS = -g -Wreturn-type -Werror-implicit-function-declaration $(UNREAL_FLAGS) -Wc++11-extensions
 LDFLAGS = -g
 
 CC = gcc
+CPP = g++
 
 SEXP_OBJS = sexp.o sbuild.o sparse.o
 LIB_OBJS = $(SEXP_OBJS) mem.o spew.o
 PARSER_OBJS = kp.yy.o kp.tab.o
 
-K_OBJS = $(LIB_OBJS) $(PARSER_OBJS) k.o kexec.o kfile.o kerr.o kps.o \
+K_LIB = $(LIB_OBJS) $(PARSER_OBJS) kexec.o kfile.o kerr.o kps.o \
   kunparse.o keval.o kcps.o ksym.o kinit.o kprim.o kenv.o growbuf.o \
   strm.o sstrm.o fstrm.o kprim_numop.o kprim_list.o ksem.o sexputil.o \
   kprim_import.o kprim_boolean.o kprim_reflect.o
+
+K_OBJS = k.o $(K_LIB)
 
 UMM_K_OBJS = kfile.o keval.o kp.yy.o kp.tab.o kps.o kmisc.o kerr.o \
   klayer.o kvalue.o kinit.o kunparse.o kexec.o katom.o kcps.o ktree.o ksym.o
@@ -23,12 +27,25 @@ PARSER_GENERATED = kp.c kp.output kp.tab.c kp.tab.h kp.exe kp.grammar \
 GENERATED = k.exe shavtest.exe *.o $(PARSER_GENERATED)
 COMMON_DEPS = kstruct.h
 
+ENGINE_OBJS = engine.o KActor.o
+
 k: $(K_OBJS)
 	@# $(CC) -Lgc6.0/.libs $(LDFLAGS) -o k $(K_OBJS) -lgc
 	$(CC) $(LDFLAGS) -o k $(K_OBJS)
 
-k.a: ${K_OBJS}
+k.a: $(K_OBJS)
 	libtool -static -o k.a *.o
+
+engine: $(K_LIB) $(ENGINE_OBJS)
+	echo ASDFASDF
+	echo $(K_LIB) $(ENGINE_OBJS)
+	$(CPP) $(LDFLAGS) -o engine $(K_LIB) $(ENGINE_OBJS)
+
+KActor.o: KActor.h KActor.cpp
+	$(CPP) $(CPPFLAGS) -c KActor.cpp
+
+engine.o: engine.cpp
+	$(CPP) $(CPPFLAGS) -c engine.cpp
 
 shavtest: shavtest.o shav.o mem.o spew.o
 	@# $(CC) -Lgc6.0/.libs $(LDFLAGS) -o shavtest shavtest.o shav.o mem.o spew.o -lgc
