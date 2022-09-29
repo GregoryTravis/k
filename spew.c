@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "a.h"
+#include "debug.h"
 #include "mem.h"
 #include "strm.h"
 #include "spew.h"
@@ -96,6 +97,7 @@ void err_do( char *f, ... )
     va_end( va );
     fflush( stdout );
     fflush( stderr );
+    bkpt();
     exit( 1 );
 }
 

@@ -3,7 +3,14 @@
 #include "keval.h"
 #include "kinit.h"
 
+static int initted = 0;
+
 void k_init( void )
 {
+  if (initted)
+    return;
+
   k_eval_init();
+
+  initted = 1;
 }
