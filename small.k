@@ -14,4 +14,6 @@ class foo
 // // var zxcv = new foo(2);
 // show 12;
 // return asdf;
-return new foo(123);
+var x = new foo(123);
+// return x.bar(100);
+return 1234;

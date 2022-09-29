@@ -6,6 +6,6 @@
 #include "kstruct.h"
 
 void k_eval_init( void );
-void k_eval( char *filename, sexp sem );
+sexp k_eval( char *filename, sexp sem );
 
 #endif /* _keval_h_ */

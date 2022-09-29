@@ -236,9 +236,11 @@ static void pprint( ostrm *ost, sexp s, int indent, int *advance, int *did_newli
         } else {
           *advance += stprintf( ost, " 0x%x", (void*)s );
         }
-//stprintf( ost, " " );
-//pprint( ost, SEXP_GET_CLOSURE_CODE( s ), indent, advance, did_newline, oneline );
         stprintf( ost, ">" );
+
+        // pprint( ost, SEXP_GET_CLOSURE_CODE(s), indent, advance, did_newline, oneline );
+        // stprintf( ost, "|" );
+        // pprint( ost, SEXP_GET_CLOSURE_ENV(s), indent, advance, did_newline, oneline );
       }
       break;
     case SEXP_BOOLEAN:

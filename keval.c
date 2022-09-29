@@ -173,7 +173,7 @@ static sexp make_funcall_layer( sexp params, sexp args )
 {
   if (SEXP_IS_CONS( params )) {
     if (!SEXP_IS_CONS( args )) {
-      kerr( "Args do not match params" );
+      kerr( "Args do not match params (1)" );
       KERRPUNTV(nil);
       return nil;
     } else {
@@ -184,7 +184,7 @@ static sexp make_funcall_layer( sexp params, sexp args )
     if (SEXP_IS_NIL( args )) {
       return nil;
     } else {
-      kerr( "Args do not match params" );
+      kerr( "Args do not match params (2)" );
       KERRPUNTV(nil);
       return nil;
     }
@@ -263,35 +263,33 @@ static void eval_trampoline( sexp sem )
 }
 */
 
-static void eval_trampoline( sexp tramp, sexp topk )
+static sexp eval_trampoline( sexp tramp, sexp topk )
 {
   sexp closure, dummy;
 
   while (1) {
-    if (sexp_scan( tramp, "(tramp % . %)", &closure, &dummy ) &&
-        SEXP_IS_CLOSURE( closure ) &&
-        SEXP_GET_CLOSURE_CODE( closure ) == topk) {
-        break;
-    }
-
     if (dotrace) {
       sexp trace = tramp;
       SD(trace);
     }
 
-    tramp = eval_apply( tramp );
+    if (sexp_scan( tramp, "(tramp . %)", &dummy )) {
+      tramp = eval_apply( tramp );
 
-    KERRPUNT;
+      KERRPUNTV(nil);
+    } else {
+      return tramp;
+    }
   }
 }
 
-void k_eval( char *filename, sexp sem )
+sexp k_eval( char *filename, sexp sem )
 {
   sexp env, topk;
   sexp fun, arg;
   sexp tramp;
 
-  topk = sexp_build( "(lambda () ())" );
+  topk = sexp_build( "(lambda x (var x))" );
 
   A(SEXP_OK(env));
   A(sem);
@@ -301,7 +299,7 @@ void k_eval( char *filename, sexp sem )
 
   sexp_dump_file( strkat( filename, ".cps.out" ), sem );
 
-  KERRPUNT;
+  KERRPUNTV(nil);
 
   fun = cadr( sem );
   arg = caddr( sem );
@@ -311,5 +309,7 @@ void k_eval( char *filename, sexp sem )
 
   tramp = sexp_build( "(tramp % %)", fun, arg );
 
-  eval_trampoline( tramp, topk );
+  sexp final = eval_trampoline( tramp, topk );
+
+  return final;
 }
