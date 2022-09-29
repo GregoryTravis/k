@@ -3,6 +3,11 @@
 #ifndef _sexp_h_
 #define _sexp_h_
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include <stdio.h>
 
 #include "a.h"
@@ -241,5 +246,9 @@ void sexp_dump_fancy( char *message, sexp sexp );
       }                                                          \
     }                                                            \
   } while (0)
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif /* _sexp_h_ */

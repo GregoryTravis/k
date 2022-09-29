@@ -43,15 +43,13 @@ sexp k_prepare_file( char *filename )
   return sem;
 }
 
-int k_exec_file( char *filename )
+sexp k_exec_file( char *filename )
 {
   sexp sem = k_prepare_file( filename );
 
   if (!KERR) {
-    sexp result = k_eval( filename, sem );
-    printf("Final result\n");
-    SD(result);
+    return k_eval( filename, sem );
+  } else {
+    return nil;
   }
-
-  return k_err_deal();
 }

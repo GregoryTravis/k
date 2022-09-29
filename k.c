@@ -1,6 +1,7 @@
 // $Id: k.c,v 1.5 2002/09/05 22:03:51 Administrator Exp $
 
 #include <stdio.h>
+#include "kerr.h"
 #include "keval.h"
 #include "kexec.h"
 #include "kinit.h"
@@ -16,10 +17,13 @@ int main( int argc, char *argv[] )
     int ret;
     fprintf( stderr, "Running %s\n", argv[a] );
 
-    k_exec_file( argv[a] );
+    sexp result = k_exec_file( argv[a] );
+
+    printf("Final result\n");
+    SD(result);
   }
 
   ksym_dump_reasons( "k.reasons.out" );
 
-  return 0;
+  return k_err_deal();
 }

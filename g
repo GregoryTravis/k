@@ -1,7 +1,7 @@
 (make && k small.k) 2>&1 | tee out
 exit
 
-(make engine) 2>&1 | tee out
+(make engine && ./engine) 2>&1 | tee out
 exit
 
 (make clean && make) 2>&1 | tee out

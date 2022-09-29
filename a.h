@@ -5,7 +5,10 @@
 
 #include "spew.h"
 
+#ifndef __cplusplus
 typedef unsigned char bool;
+#endif // __cplusplus
+
 typedef unsigned char uchar;
 
 #define ASSERT

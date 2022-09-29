@@ -1,11 +1,19 @@
 #include "KActor.h"
 
+/* #include "kexec.h" */
+/* #include "sexp.h" */
+
 KActor::KActor()
 {
+  /* sexp result = k_exec_file( argv[a] ); */
+
+  /* printf("Final result\n"); */
+  /* SD(result); */
 }
 
-void KActor::Tick(float DeltaTime)
+float KActor::Tick(float DeltaTime)
 {
+  return DeltaTime;
 }
 
 void KActor::SetLocation(float x, float y, float z)
