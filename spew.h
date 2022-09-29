@@ -40,8 +40,6 @@ typedef struct spew_slot_info {
     enum spew_slot slot;
 } spew_slot_info;
 
-spew_slot_info spew_slot_infos[slast+1];
-
 typedef enum spew_slot spew_slot;
 
 #endif /* _spew_h_ */

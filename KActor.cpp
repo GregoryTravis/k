@@ -1,11 +1,11 @@
 #include "KActor.h"
 
-/* #include "kexec.h" */
-/* #include "sexp.h" */
+#include "kexec.h"
+#include "sexp.h"
 
 KActor::KActor()
 {
-  /* sexp result = k_exec_file( argv[a] ); */
+  /* sexp result = k_exec_file("kactor.k"); */
 
   /* printf("Final result\n"); */
   /* SD(result); */

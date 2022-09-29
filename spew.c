@@ -9,6 +9,8 @@
 #include "strm.h"
 #include "spew.h"
 
+spew_slot_info spew_slot_infos[slast+1];
+
 void vspew( int slot, char *f, va_list va );
 
 FILE *spewfile=0;
