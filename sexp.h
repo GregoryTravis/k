@@ -130,7 +130,7 @@ typedef struct sexp_heap {
 #define SEXP_MKFLOAT(f) ( (((sexp)(f))&~SEXP_TAG_BIT_MASK) | SEXP_FLOAT_TAG )
 #define SEXP_MKOBJ(o) (mkobj((o)))
 #define SEXP_MKNATIVE(n) (mknative(&(n),#n))
-#define SEXP_MKBOOLEAN(b) ((b)?true:false)
+#define SEXP_MKBOOLEAN(b) ((b)?True:False)
 #define SEXP_MKCLOSURE(c,e,n) (mkclosure((c),(e),(n)))
 #define SEXP_MKSTRING(s) (mkstring((s)))
 #define SEXP_GET_INTEGER(s) (A(SEXP_IS_INTEGER((s))),(((int)(s))>>1))
@@ -138,7 +138,7 @@ typedef struct sexp_heap {
 #define SEXP_GET_OBJ(s) (A(SEXP_IS_OBJ((s))),(((sexp_heap*)(s))->contents.obj.obj))
 #define SEXP_GET_NATIVE(s) (A(SEXP_IS_NATIVE((s))),(((sexp_heap*)(s))->contents.native.native))
 #define SEXP_GET_NATIVE_FUNCNAME(s) (A(SEXP_IS_NATIVE((s))),(((sexp_heap*)(s))->contents.native.funcname))
-#define SEXP_GET_BOOLEAN(s) (A(SEXP_IS_BOOLEAN((s))),((s)==true))
+#define SEXP_GET_BOOLEAN(s) (A(SEXP_IS_BOOLEAN((s))),((s)==True))
 #define SEXP_GET_CLOSURE_CODE(s) (A(SEXP_IS_CLOSURE((s))),(((sexp_heap*)(s))->contents.closure.code))
 #define SEXP_GET_CLOSURE_ENV(s) (A(SEXP_IS_CLOSURE((s))),(((sexp_heap*)(s))->contents.closure.env))
 #define SEXP_GET_CLOSURE_NAME(s) (A(SEXP_IS_CLOSURE((s))),(((sexp_heap*)(s))->contents.closure.name))
@@ -195,8 +195,8 @@ sexp mkstring( char *string );
 extern sexp nil;
 extern sexp_heap _nil;
 #define CONST_NIL ((sexp)&(_nil))
-extern sexp true;
-extern sexp false;
+extern sexp True;
+extern sexp False;
 
 #define L1(a) (cons((a),nil))
 #define L2(a,b) (cons((a),L1((b))))

@@ -18,8 +18,8 @@ static int (*obj_dumper)( ostrm *ost, void *stuff ) = 0;
 sexp_heap _nil = { SEXP_NIL, NULL, CONST_NIL };
 sexp nil = (sexp)&_nil;
 
-SEXP_STATIC_SEXP(true,SEXP_BOOLEAN);
-SEXP_STATIC_SEXP(false,SEXP_BOOLEAN);
+SEXP_STATIC_SEXP(True,SEXP_BOOLEAN);
+SEXP_STATIC_SEXP(False,SEXP_BOOLEAN);
 
 static sexp_heap *new_sexp_heap( void )
 {
@@ -244,7 +244,7 @@ static void pprint( ostrm *ost, sexp s, int indent, int *advance, int *did_newli
       }
       break;
     case SEXP_BOOLEAN:
-      stprintf( ost, "%s", s==true ? "#t" : "#f" );
+      stprintf( ost, "%s", s==True ? "#t" : "#f" );
       *advance += 2;
       break;
     case SEXP_STRING:

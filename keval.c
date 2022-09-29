@@ -126,9 +126,9 @@ static sexp feval( sexp env, sexp exp )
     return funcall;
   } else if (sexp_scan( exp, "(fif % % %)", &s, &ss, &sss )) {
     s = feval( env, s );
-    if (s==true) {
+    if (s==True) {
       return feval( env, ss );
-    } else if (s==false) {
+    } else if (s==False) {
       return feval( env, sss );
     } else {
       SD(s);

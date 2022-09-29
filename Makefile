@@ -37,8 +37,6 @@ k.a: $(K_OBJS)
 	libtool -static -o k.a *.o
 
 engine: $(K_LIB) $(ENGINE_OBJS)
-	echo ASDFASDF
-	echo $(K_LIB) $(ENGINE_OBJS)
 	$(CPP) $(LDFLAGS) -o engine $(K_LIB) $(ENGINE_OBJS)
 
 KActor.o: KActor.h KActor.cpp

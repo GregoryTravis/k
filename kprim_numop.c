@@ -70,13 +70,13 @@ static sexp numop_generic( sexp arglist, int (*intp)( int, int ), float (*floatp
 #define DEFPRIMCONDOP(t,name,type) \
   static sexp __condop_##name##_##type( type a, type b ) \
   { \
-    return a t b ? true : false; \
+    return a t b ? True : False; \
   }
 
 #define DEFSTRINGPRIMCONDOP(t,name) \
   static sexp __condop_##name##_##string( char *a, char *b ) \
   { \
-    return (!strcmp( a, b )) ? true : false; \
+    return (!strcmp( a, b )) ? True : False; \
   }
 
 #define DEFCONDOPWRAPPER(name) \

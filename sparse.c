@@ -134,9 +134,9 @@ static sexp sexp_parse_atom( char *string, char **next )
   {
     int len = s-string;
     if (len==2 && !strncmp( string, "#t", 2 )) {
-      atom = true;
+      atom = True;
     } else if (len==2 && !strncmp( string, "#f", 2 )) {
-      atom = false;
+      atom = False;
     } else if (*s=='\"') {
       atom = sexp_parse_string( s, next );
     } else {
