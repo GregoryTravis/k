@@ -50,6 +50,10 @@ static sexp feval( sexp env, sexp exp )
   /* printf("\n"); */
   /* printf("\n"); */
 
+  /* printf("UM %lx %lx\n", env, exp); */
+  /* SD(env); */
+  /* SD(exp); */
+
   A(SEXP_OK( env ));
   A(SEXP_OK( exp ));
 

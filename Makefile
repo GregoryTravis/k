@@ -9,7 +9,7 @@ CC = gcc
 CPP = g++
 
 SEXP_OBJS = sexp.o sbuild.o sparse.o
-LIB_OBJS = $(SEXP_OBJS) mem.o spew.o
+LIB_OBJS = $(SEXP_OBJS) mem.o spew.o debug.o
 PARSER_OBJS = kp.yy.o kp.tab.o
 
 K_LIB = $(LIB_OBJS) $(PARSER_OBJS) kexec.o kfile.o kerr.o kps.o \
@@ -27,7 +27,7 @@ PARSER_GENERATED = kp.c kp.output kp.tab.c kp.tab.h kp.exe kp.grammar \
 GENERATED = k k.a engine shavtest *.o $(PARSER_GENERATED)
 COMMON_DEPS = kstruct.h
 
-ENGINE_OBJS = engine.o KActor.o
+ENGINE_OBJS = engine.o KActor.o kembed.o
 
 k: $(K_OBJS)
 	@# $(CC) -Lgc6.0/.libs $(LDFLAGS) -o k $(K_OBJS) -lgc
@@ -45,6 +45,9 @@ KActor.o: KActor.h KActor.cpp
 engine.o: engine.cpp
 	$(CPP) $(CPPFLAGS) -c engine.cpp
 
+kembed.o: kembed.cpp kembed.h
+	$(CPP) $(CPPFLAGS) -c kembed.cpp
+
 shavtest: shavtest.o shav.o mem.o spew.o
 	@# $(CC) -Lgc6.0/.libs $(LDFLAGS) -o shavtest shavtest.o shav.o mem.o spew.o -lgc
 	$(CC) $(LDFLAGS) -o shavtest shavtest.o shav.o mem.o spew.o
@@ -60,6 +63,9 @@ shavtest.o: shavtest.c shav.h
 
 shav.o: shav.c shav.h
 	$(CC) $(CFLAGS) -c shav.c
+
+debug.o: debug.c
+	$(CC) $(CFLAGS) -c debug.c
 
 spew.o: spew.c
 	$(CC) $(CFLAGS) -c spew.c
@@ -174,4 +180,3 @@ kp.yy.o: kp.yy.c kp.yy.h $(COMMON_DEPS)
 
 kp.tab.o: kp.tab.c kp.tab.h $(COMMON_DEPS)
 	$(CC) $(CFLAGS) -c kp.tab.c
-
