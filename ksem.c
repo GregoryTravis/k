@@ -99,8 +99,10 @@ static sexp process_class_body( sexp classname, sexp classbody )
       exporter );
 
   FORLIST( ctorparam, cadr( ctor ), {
-    ctorparams = sexp_build( "((var %) . %)", ctorparam, ctorparams );
+    ctorparams = snoc(ctorparams, sexp_build("(var %)", ctorparam));
   } );
+  /* printf("ctorparams\n"); */
+  /* SD(ctorparams); */
 
   clasz = sexp_build( "(lambda % (block (declrec . %) (funcall (var %) . %) (return %)))",
     cadr( ctor ), declrec, classname, ctorparams, exporter );

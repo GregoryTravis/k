@@ -3,4 +3,5 @@ make k
 k fib.k > tout
 k small.k >> tout
 k objs.k >> tout
-diff tout tout.golden
+k ctors.k >> tout
+diff tout.golden tout

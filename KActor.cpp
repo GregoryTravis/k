@@ -38,7 +38,7 @@ KActor::KActor()
   sexp SetLocation_delegate_sexp =
     mknative(&SetLocation_delegate_sexp_native, strdup("SetLocation_delegate_sexp_native"));
   sexp super = ke_call_constructor(super_class,
-      cons(SetLocation_delegate_sexp, cons(kthis, nil)));
+      cons(kthis, cons(SetLocation_delegate_sexp, nil)));
 
   sexp clas = ke_exec_file("kactor.k");
   sexp obj = ke_call_constructor(clas, cons(super, nil));
