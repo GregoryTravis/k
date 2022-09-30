@@ -5,6 +5,6 @@
 
 #include "sexp.h"
 
-sexp sexp_parse( const char *string );
+sexp sexp_parse( char *string );
 
 #endif /* _sparse_h_ */
