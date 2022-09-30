@@ -223,7 +223,6 @@ static sexp eval_apply( sexp funcall )
         err(( "Bad lambda in closure" ));
       }
 
-
       //nuenv = kenv_add_layer( lambda_env, lambda_params, args );
       nulayer = make_funcall_layer( lambda_params, args );
 
@@ -267,6 +266,7 @@ static void eval_trampoline( sexp sem )
 }
 */
 
+// TODO topk not used here
 static sexp eval_trampoline( sexp tramp, sexp topk )
 {
   sexp closure, dummy;
@@ -316,4 +316,17 @@ sexp k_eval( char *filename, sexp sem )
   sexp final = eval_trampoline( tramp, topk );
 
   return final;
+}
+
+// The current implementation is meant to compile and run a single file and be
+// done. What is needed now is the ability to get a class from this process,
+// and then make more calls to it. This lets you apply an already evaluated
+// function to an argument.
+sexp k_apply_compiled_function(sexp compiled_function, sexp args)
+{
+  sexp topk = sexp_build( "(lambda (x) (var x))" );
+  sexp topkc = feval( global_env, topk );
+  sexp application = sexp_build( "(tramp % % . %)", compiled_function, topkc, args );
+  sexp result = eval_trampoline(application, topk); // result, SEXP_MKINT(12));
+  return result;
 }

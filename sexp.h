@@ -230,6 +230,8 @@ void sexp_dump_fancy( char *message, sexp sexp );
 #define SD(s) sexp_dump_fancy(#s,(s))
 #define SM(m,s) sexp_dump_fancy(#m,(s))
 
+void sexp_dump_closure( sexp sexp );
+
 // Iterators
 #define FORLIST(_elem,_list,_code)                               \
   do {                                                           \

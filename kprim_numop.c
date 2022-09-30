@@ -61,7 +61,7 @@ static sexp numop_generic( sexp arglist, int (*intp)( int, int ), float (*floatp
   } else {
     sexp_dump( a );
     sexp_dump( b );
-    kerr( "Bad argument types for %s", name );
+    kerr( "Bad argument types for %s (1)", name );
   }
   KERRPUNTV(nil);
   return nil;
@@ -139,7 +139,7 @@ static sexp condop_generic( sexp arglist, sexp (*intp)( int, int ),
   } else {
     sexp_dump( a );
     sexp_dump( b );
-    kerr( "Bad argument types for %s", name );
+    kerr( "Bad argument types for %s (2)", name );
   }
   KERRPUNTV(nil);
   return nil;
@@ -273,9 +273,10 @@ sexp numop_plus( sexp arglist )
 
     return SEXP_MKSTRING( concat );
   } else {
+    printf("WUT %d %d\n", at, bt);
     sexp_dump( a );
     sexp_dump( b );
-    kerr( "Bad argument types for %s", name );
+    kerr( "Bad argument types for %s (3)", name );
   }
   KERRPUNTV(nil);
   return nil;

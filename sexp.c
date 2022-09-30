@@ -366,6 +366,9 @@ sexp snoc( sexp rdc, sexp rac )
 
 sexp assoc( sexp key, sexp alist )
 {
+  /* printf("ASSOC\n"); */
+  /* SD(key); */
+  /* SD(alist); */
   if (SEXP_IS_NIL( alist )) {
     return nil;
   } else if (SEXP_IS_CONS( alist )) {
@@ -426,6 +429,13 @@ sexp zipper( sexp cars, sexp cdrs )
     return cons( cons( car( cars ), car( cdrs ) ),
       zipper( cdr( cars ), cdr( cdrs ) ) );
   }
+}
+
+void sexp_dump_closure( sexp sexp )
+{
+  printf( "---- closure ---------------------------------\n" );
+  sexp_dump_fancy("code", SEXP_GET_CLOSURE_CODE(sexp));
+  sexp_dump_fancy("env", SEXP_GET_CLOSURE_ENV(sexp));
 }
 
 void sexp_dump_fancy( char *message, sexp sexp )

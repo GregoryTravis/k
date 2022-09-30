@@ -76,7 +76,8 @@ mem.o: mem.c
 k.o: k.c $(COMMON_DEPS)
 	$(CC) $(CFLAGS) -c k.c
 
-kp.yy.h kp.yy.c: kp.ccc
+#kp.yy.h kp.yy.c: kp.ccc
+kp.yy.c: kp.ccc
 	ccc -vb -u kp.ccc
 
 kp.tab.h kp.tab.c: kp.ccc
@@ -175,7 +176,8 @@ kprim_boolean.o: kprim_boolean.c kprim_boolean.h $(COMMON_DEPS)
 kprim_reflect.o: kprim_reflect.c kprim_reflect.h $(COMMON_DEPS)
 	$(CC) $(CFLAGS) -c kprim_reflect.c
 
-kp.yy.o: kp.yy.c kp.yy.h $(COMMON_DEPS)
+#kp.yy.o: kp.yy.c kp.yy.h $(COMMON_DEPS)
+kp.yy.o: kp.yy.c $(COMMON_DEPS)
 	$(CC) $(CFLAGS) -c kp.yy.c
 
 kp.tab.o: kp.tab.c kp.tab.h $(COMMON_DEPS)
