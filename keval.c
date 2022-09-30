@@ -1,9 +1,11 @@
 // $Id: keval.c,v 1.17 2002/10/22 19:16:49 Administrator Exp $
 
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 
 #include "a.h"
+#include "debug.h"
 #include "mem.h"
 #include "sexp.h"
 
@@ -201,6 +203,8 @@ static sexp eval_apply( sexp funcall )
 {
   sexp s, ss, sss;
 
+  /* printf("eval_apply\n"); */
+  /* SD(funcall); */
   if (sexp_scan( funcall, "(tramp % . %)", &s, &ss )) {
     sexp func = s;
     sexp args = ss;
@@ -234,6 +238,7 @@ static sexp eval_apply( sexp funcall )
       nuenv = kenv_add_layer( lambda_env, nulayer );
       return feval( nuenv, lambda_body );
     } else {
+      printf("Bad closure");
       SD(func);
       err(( "Bad closure!" ));
     }

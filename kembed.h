@@ -1,6 +1,8 @@
 #ifndef _kembed_h_
 #define _kembed_h_
 
+#include "debug.h"
+#include "sbuild.h"
 #include "sexp.h"
 
 #define KESD(s) ke_dump_sexp(#s,(s))

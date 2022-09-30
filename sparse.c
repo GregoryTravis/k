@@ -8,9 +8,9 @@
 #define sexp_isspace(c) ((c)==' '||(c)=='\t'||(c)=='\n')
 #define sexp_isatomchar(c) (!sexp_isspace(c) && ((c)!='(') && ((c)!=')') && ((c)!='.') && (c))
 
-static sexp sexp_parse_sexp( char *string, char **next );
+static sexp sexp_parse_sexp( const char *string, const char **next );
 
-static sexp sexp_parse_list( char *string, char **next )
+static sexp sexp_parse_list( const char *string, const char **next )
 {
   while (sexp_isspace(*string)) {
     string++;
@@ -40,7 +40,7 @@ static sexp sexp_parse_list( char *string, char **next )
   }
 }
 
-static sexp sexp_parse_string( char *string, char **next )
+static sexp sexp_parse_string( const char *string, const char **next )
 {
   char *s = string, *nustring, *nus;
   int length = 0;
@@ -117,7 +117,7 @@ static sexp sexp_parse_string( char *string, char **next )
 }
 
 // assumes null-termination, like everything else
-static sexp sexp_parse_atom( char *string, char **next )
+static sexp sexp_parse_atom( const char *string, const char **next )
 {
   char *s = string;
   sexp atom;
@@ -152,7 +152,7 @@ static sexp sexp_parse_atom( char *string, char **next )
   return atom;
 }
 
-static sexp sexp_parse_sexp( char *string, char **next )
+static sexp sexp_parse_sexp( const char *string, const char **next )
 {
   while (sexp_isspace(*string) && *string) {
     string++;
@@ -170,7 +170,7 @@ static sexp sexp_parse_sexp( char *string, char **next )
   }
 }
 
-sexp sexp_parse( char *string )
+sexp sexp_parse( const char *string )
 {
   char *dummy;
 

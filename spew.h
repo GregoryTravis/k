@@ -10,7 +10,7 @@
 #define spew(a) spew_do a
 #define spew_tab(s,t) spew_tab_do(s,t)
 
-void spew_do( int slot, char *f, ... );
+void spew_do( int slot, const char *f, ... );
 void spew_tab_do( int slot, int tab );
 
 #define SPEWB(code) do code while (0)
@@ -27,8 +27,8 @@ void spew_tab_do( int slot, int tab );
 #define err(a) err_do a
 #define warn(a) warn_do a
 
-void warn_do( char *f, ... );
-void err_do( char *f, ... );
+void warn_do( const char *f, ... );
+void err_do( const char *f, ... );
 
 #define SPEWSLOT(slot) slot
 enum spew_slot {
@@ -36,7 +36,7 @@ enum spew_slot {
 } ;
 
 typedef struct spew_slot_info {
-    char *name;
+    const char *name;
     enum spew_slot slot;
 } spew_slot_info;
 

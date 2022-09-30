@@ -3,9 +3,18 @@
 #ifndef _sbuild_h_
 #define _sbuild_h_
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "sexp.h"
 
 sexp sexp_build( char *format, ... );
 int sexp_scan( sexp target, char *format, ... );
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif /* _sbuild_h_ */

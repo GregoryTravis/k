@@ -20,11 +20,19 @@ fun objectlookup(name, type, obj)
 
 class kactor
 {
-  public fun kactor() {
+  public var super = nil;
+
+  public fun kactor(_super) {
+    super = _super;
   }
 
   public fun tick(n) {
-    return n + 10;
+    var n2 = setLocation(1, 2, 3);
+    return n + n2;
+  }
+
+  public fun setLocation(x, y, z) {
+    return super.setLocation(x, y, z);
   }
 }
 

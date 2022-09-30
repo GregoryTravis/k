@@ -12,7 +12,7 @@
 
 spew_slot_info spew_slot_infos[slast+1];
 
-void vspew( int slot, char *f, va_list va );
+void vspew( int slot, const char *f, va_list va );
 
 FILE *spewfile=0;
 
@@ -57,7 +57,7 @@ void spew_init( void )
     fclose( fp );
 }
 
-void spew_do( int slot, char *f, ... )
+void spew_do( int slot, const char *f, ... )
 {
     va_list va;
 
@@ -69,7 +69,7 @@ void spew_do( int slot, char *f, ... )
     va_end(va);
 }
 
-void vspew( int slot, char *f, va_list va )
+void vspew( int slot, const char *f, va_list va )
 {
   if (spewfile==0)
     spewfile = stdout;
@@ -81,7 +81,7 @@ void vspew( int slot, char *f, va_list va )
   }
 }
 
-void warn_do( char *f, ... )
+void warn_do( const char *f, ... )
 {
     va_list va;
     va_start(va,f);
@@ -89,7 +89,7 @@ void warn_do( char *f, ... )
     va_end( va );
 }
 
-void err_do( char *f, ... )
+void err_do( const char *f, ... )
 {
     va_list va;
     va_start(va,f);
