@@ -16,14 +16,14 @@
 
 static int (*obj_dumper)( ostrm *ost, void *stuff ) = 0;
 
-sexp_heap _nil = { SEXP_NIL, NULL, NULL, 0, CONST_NIL };
+sexp_heap _nil = { SEXP_NIL, NULL, NULL, 0, 0, CONST_NIL };
 sexp nil = (sexp)&_nil;
 
 SEXP_STATIC_SEXP(True,SEXP_BOOLEAN);
 SEXP_STATIC_SEXP(False,SEXP_BOOLEAN);
 
 // For GC
-sexp_heap *allocated = NULL;
+sexp_heap *sexp_allocated = NULL;
 
 static sexp_heap *new_sexp_heap( void )
 {
@@ -34,8 +34,8 @@ static sexp_heap *new_sexp_heap( void )
   sh->properties = nil;
 
   // Add to allocation chain
-  sh->gc_next = allocated;
-  allocated = sh;
+  sh->gc_next = sexp_allocated;
+  sexp_allocated = sh;
 
   return sh;
 }
@@ -534,4 +534,10 @@ void walk(sexp s, void (*f)(sexp))
 
   // TODO
   // freehash(h);
+}
+
+// This is ok because a sexp_heap ptr is a sexp
+void walk_sexp_heap(sexp_heap *sh, void (*f)(sexp_heap*))
+{
+  walk((sexp)sh, (void (*)(sexp))f);
 }

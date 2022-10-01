@@ -98,12 +98,14 @@ typedef struct sexp_heap {
   struct sexp_heap *gc_next;
   // See GC for values
   int gc_state;
+  // Root?
+  int gc_pinned;
 
   sexp properties;
 } sexp_heap ;
 
 // For GC
-extern sexp_heap *allocated;
+extern sexp_heap *sexp_allocated;
 
 #include "sbuild.h"
 #include "sparse.h"
@@ -126,6 +128,7 @@ extern sexp_heap *allocated;
       (SEXP_HEAP_TYPE((s))))
 #define SEXP_TYPE_OK(t) ((t)>=SEXP_MIN && (t)<=SEXP_MAX)
 #define SEXP_OK(s) (((s)!=0)&&(SEXP_TYPE_OK(SEXP_TYPE((s)))))
+#define SEXP_HASH_OK(sh) (((sh)!=0)&&(SEXP_TYPE_OK(SEXP_TYPE(((sexp)sh)))))
 
 #define SEXP_IS_NIL(s) (A((s)),((s)==nil))
 #define SEXP_IS_SYMBOL(s) (A((s)),(SEXP_TYPE((s))==SEXP_SYMBOL))
@@ -191,6 +194,7 @@ sexp cddr( sexp s );
 sexp caddr( sexp s );
 
 void walk(sexp s, void (*f)(sexp));
+void walk_sexp_heap(sexp_heap *sh, void (*f)(sexp_heap*));
 
 sexp mkobj( void *obj );
 sexp mknative( sexp_native native, char *funcname );
@@ -200,10 +204,10 @@ sexp mkstring( char *string );
 #define SEXP_IS_ATOM(s) (A(SEXP_OK((s))), !SEXP_IS_CONS((s)))
 
 #define SEXP_STATIC_SEXP(varname,type) \
-  static sexp_heap __##varname = { type, NULL, NULL, 0, CONST_NIL }; sexp varname = (sexp)&__##varname
+  static sexp_heap __##varname = { type, NULL, NULL, 0, 0, CONST_NIL }; sexp varname = (sexp)&__##varname
 
 #define SEXP_STATIC_SYMBOL(varname,symname) \
-  sexp_heap _##varname = { SEXP_SYMBOL, #symname, NULL, 0, CONST_NIL }; sexp varname = (sexp)&_##varname
+  sexp_heap _##varname = { SEXP_SYMBOL, #symname, NULL, 0, 0, CONST_NIL }; sexp varname = (sexp)&_##varname
 
 extern sexp nil;
 extern sexp_heap _nil;

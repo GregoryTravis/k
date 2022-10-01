@@ -23,7 +23,7 @@ int main( int argc, char *argv[] )
 
     printf("Final result\n");
     SD(result);
-    //gc(result);
+    // gc(result);
   }
 
   ksym_dump_reasons( "k.reasons.out" );
