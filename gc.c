@@ -16,14 +16,6 @@
 // - release mode
 //   - walk allocation chain and remove + deallcoate dead
 
-typedef enum gc_state {
-  GC_MIN = 1,
-  GC_START = GC_MIN,
-  GC_IN_USE,
-  GC_DEAD,
-  GC_MAX = GC_DEAD
-} gc_state ;
-
 #define GC_STATE_OK(s) ((s) >= GC_MIN && (s) <= GC_MAX)
 
 void set_to_start(sexp_heap *sh) {

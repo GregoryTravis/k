@@ -42,18 +42,21 @@ static sexp_heap *new_sexp_heap( void )
 
 sexp *_car(sexp s)
 {
+  GCA(s);
   A(SEXP_IS_CONS((s)));
   return &(SEXP_HEAP((s))->contents.cons.car);
 }
 
 sexp *_cdr(sexp s)
 {
+  GCA(s);
   A(SEXP_IS_CONS((s)));
   return &(SEXP_HEAP((s))->contents.cons.cdr);
 }
 
 sexp *sexp_properties(sexp s)
 {
+  GCA(s);
   A((s) && !SEXP_IS_MANIFEST((s)));
   return &(((sexp_heap*)(s))->properties);
 }
@@ -62,7 +65,9 @@ sexp cons( sexp car, sexp cdr )
 {
   sexp_heap *pair;
 
+  GCA(car);
   A(SEXP_OK(car));
+  GCA(cdr);
   A(SEXP_OK(cdr));
 
   pair = new_sexp_heap();
