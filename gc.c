@@ -63,9 +63,42 @@ void set_not_in_use_to_dead(sexp_heap *sh)
   }
 }
 
+typedef struct {
+  int gc_type_counts[GC_MAX+1];
+} gc_stats;
+gc_stats the_stats;
+
+void stats_init(gc_stats *stats)
+{
+  for (int i=0; i<=GC_MAX; ++i) {
+    stats->gc_type_counts[i] = 0;
+  }
+}
+
+void stats_dump(gc_stats *stats)
+{
+  for (int i=GC_MIN; i<=GC_MAX; ++i) {
+    printf("GC type %d count %d\n", i, stats->gc_type_counts[i]);
+  }
+}
+
+void stats_update(sexp_heap *sh)
+{
+  A(GC_STATE_OK(sh->gc_state));
+  the_stats.gc_type_counts[sh->gc_state]++;
+}
+
+void stats(void)
+{
+  stats_init(&the_stats);
+  walk_allocated(&stats_update);
+  stats_dump(&the_stats);
+}
+
 void gc(sexp s)
 {
   walk_allocated(&set_to_start);
   walk_allocated(&mark_pinned_in_use);
   walk_allocated(&set_not_in_use_to_dead);
+  stats();
 }

@@ -24,6 +24,9 @@ int main( int argc, char *argv[] )
     printf("Final result\n");
     SD(result);
     gc(result);
+
+    /* sexp result2 = k_exec_file( argv[a] ); */
+    /* gc(result); */
   }
 
   ksym_dump_reasons( "k.reasons.out" );
