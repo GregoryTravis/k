@@ -510,15 +510,24 @@ void walk1(hash *h, sexp s, void (*f)(sexp))
     case SEXP_OBJ:
     case SEXP_NATIVE:
     case SEXP_STRING:
+    case SEXP_BOOLEAN:
       // nothing
       break;
     case SEXP_CONS:
-      walk1(h, car(s), f);
-      walk1(h, cdr(s), f);
+      if (!SEXP_IS_MANIFEST(car(s))) {
+        walk1(h, car(s), f);
+      }
+      if (!SEXP_IS_MANIFEST(cdr(s))) {
+        walk1(h, cdr(s), f);
+      }
       break;
     case SEXP_CLOSURE:
-      walk1(h, SEXP_GET_CLOSURE_CODE(s), f);
-      walk1(h, SEXP_GET_CLOSURE_ENV(s), f);
+      if (!SEXP_IS_MANIFEST(SEXP_GET_CLOSURE_CODE(s))) {
+        walk1(h, SEXP_GET_CLOSURE_CODE(s), f);
+      }
+      if (!SEXP_IS_MANIFEST(SEXP_GET_CLOSURE_ENV(s))) {
+        walk1(h, SEXP_GET_CLOSURE_ENV(s), f);
+      }
       break;
     default:
       err(("Walk: bad sexp type %d\n", SEXP_TYPE(s)));

@@ -26,14 +26,24 @@ typedef enum gc_state {
 
 #define GC_STATE_OK(s) ((s) >= GC_MIN && (s) <= GC_MAX)
 
-void set_to_start(sexp_heap *sh) { A(sh); A(SEXP_HASH_OK(sh)); sh->gc_state = GC_START; }
-void set_to_in_use(sexp_heap *sh) { A(sh); A(SEXP_HASH_OK(sh)); sh->gc_state = GC_IN_USE; }
+void set_to_start(sexp_heap *sh) {
+  A(sh);
+  A(SEXP_HASH_OK(sh));
+  sh->gc_state = GC_START;
+}
+
+void set_to_in_use(sexp_heap *sh) {
+  A(sh);
+  A(SEXP_HASH_OK(sh));
+  sh->gc_state = GC_IN_USE;
+}
 
 void walk_allocated(void (*f)(sexp_heap *))
 {
   sexp_heap *here = sexp_allocated;
   while (here != NULL) {
     f(here);
+    here = here->gc_next;
   }
 }
 
