@@ -23,7 +23,10 @@ int main( int argc, char *argv[] )
 
     printf("Final result\n");
     SD(result);
-    gc(result);
+    sexp_pin(result);
+    gc();
+    sexp_unpin(result);
+    gc();
 
     /* sexp result2 = k_exec_file( argv[a] ); */
     /* gc(result); */

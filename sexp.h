@@ -106,6 +106,8 @@ typedef struct sexp_heap {
 
 // For GC
 extern sexp_heap *sexp_allocated;
+extern void sexp_pin(sexp s);
+extern void sexp_unpin(sexp s);
 
 #include "sbuild.h"
 #include "sparse.h"

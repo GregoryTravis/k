@@ -550,3 +550,21 @@ void walk_sexp_heap(sexp_heap *sh, void (*f)(sexp_heap*))
 {
   walk((sexp)sh, (void (*)(sexp))f);
 }
+
+void sexp_pin_set(sexp s, int state)
+{
+  A(s);
+  A(SEXP_OK(s));
+  A(!SEXP_IS_MANIFEST(s));
+  ((sexp_heap*)s)->gc_pinned = state;
+}
+
+void sexp_pin(sexp s)
+{
+  sexp_pin_set(s, 1);
+}
+
+void sexp_unpin(sexp s)
+{
+  sexp_pin_set(s, 0);
+}

@@ -77,9 +77,11 @@ void stats_init(gc_stats *stats)
 
 void stats_dump(gc_stats *stats)
 {
+  printf("======= gc stats =======\n");
   for (int i=GC_MIN; i<=GC_MAX; ++i) {
     printf("GC type %d count %d\n", i, stats->gc_type_counts[i]);
   }
+  printf("======= gc stats =======\n");
 }
 
 void stats_update(sexp_heap *sh)
@@ -95,10 +97,12 @@ void stats(void)
   stats_dump(&the_stats);
 }
 
-void gc(sexp s)
+void gc(void)
 {
   walk_allocated(&set_to_start);
+  stats();
   walk_allocated(&mark_pinned_in_use);
+  stats();
   walk_allocated(&set_not_in_use_to_dead);
   stats();
 }

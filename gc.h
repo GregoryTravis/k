@@ -11,7 +11,7 @@ extern "C"
 #include "a.h"
 #include "sexp.h"
 
-void gc(sexp s);
+void gc(void);
 
 #ifdef __cplusplus
 } // extern "C"
