@@ -109,7 +109,7 @@ typedef struct sexp_heap {
 extern sexp_heap *sexp_allocated;
 extern void sexp_pin(sexp s);
 extern void sexp_unpin(sexp s);
-#define GCA(s) (A((s)) && A(GC_OK((s))))
+#define GCA(s) (A((s) && GC_OK((s))))
 
 #include "sbuild.h"
 #include "sparse.h"

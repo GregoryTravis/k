@@ -31,6 +31,9 @@ static sexp_heap *new_sexp_heap( void )
 
   A(!(((long)sh)&SEXP_TAG_BIT_MASK)); // must have tag bits empty
 
+  sh->gc_next = 0;
+  sh->gc_state = 0;
+  sh->gc_pinned = 0;
   sh->properties = nil;
 
   // Add to allocation chain
