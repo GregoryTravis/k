@@ -16,7 +16,7 @@
 
 static int (*obj_dumper)( ostrm *ost, void *stuff ) = 0;
 
-sexp_heap _nil = { SEXP_NIL, NULL, NULL, CONST_NIL };
+sexp_heap _nil = { SEXP_NIL, NULL, NULL, 0, CONST_NIL };
 sexp nil = (sexp)&_nil;
 
 SEXP_STATIC_SEXP(True,SEXP_BOOLEAN);

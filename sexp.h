@@ -93,7 +93,11 @@ typedef struct sexp_heap {
     } string;
   } contents;
 
+  // GC stuff
+  // Linked list threaded through all unfreed sexp_heaps
   struct sexp_heap *gc_next;
+  // See GC for values
+  int gc_state;
 
   sexp properties;
 } sexp_heap ;
@@ -196,10 +200,10 @@ sexp mkstring( char *string );
 #define SEXP_IS_ATOM(s) (A(SEXP_OK((s))), !SEXP_IS_CONS((s)))
 
 #define SEXP_STATIC_SEXP(varname,type) \
-  static sexp_heap __##varname = { type, NULL, NULL, CONST_NIL }; sexp varname = (sexp)&__##varname
+  static sexp_heap __##varname = { type, NULL, NULL, 0, CONST_NIL }; sexp varname = (sexp)&__##varname
 
 #define SEXP_STATIC_SYMBOL(varname,symname) \
-  sexp_heap _##varname = { SEXP_SYMBOL, #symname, NULL, CONST_NIL }; sexp varname = (sexp)&_##varname
+  sexp_heap _##varname = { SEXP_SYMBOL, #symname, NULL, 0, CONST_NIL }; sexp varname = (sexp)&_##varname
 
 extern sexp nil;
 extern sexp_heap _nil;
