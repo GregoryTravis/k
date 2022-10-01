@@ -43,10 +43,10 @@ typedef enum sexp_types {
 
 typedef long sexp;
 
-typedef struct hashentry {
-  char *name;
-  sexp value;
-} hashentry ;
+/* typedef struct hashentry { */
+/*   char *name; */
+/*   sexp value; */
+/* } hashentry ; */
 
 typedef sexp (*sexp_native)( sexp arglist );
 
@@ -57,19 +57,21 @@ typedef struct sexp_heap {
       char *name;
     } symbol;
 
-    struct {
-      int value;
-    } integer;
+    // Not used?
+    /* struct { */
+    /*   int value; */
+    /* } integer; */
 
     struct {
       sexp car;
       sexp cdr;
     } cons;
 
-    struct {
-      int size;
-      hashentry *entries;
-    } hash;
+    // Not used?
+    /* struct { */
+    /*   int size; */
+    /*   hashentry *entries; */
+    /* } hash; */
 
     struct {
       void *obj;
@@ -178,6 +180,8 @@ sexp cadr( sexp s );
 sexp cdar( sexp s );
 sexp cddr( sexp s );
 sexp caddr( sexp s );
+
+void walk(sexp s, void (*f)(sexp));
 
 sexp mkobj( void *obj );
 sexp mknative( sexp_native native, char *funcname );

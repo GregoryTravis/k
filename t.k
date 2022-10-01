@@ -83,3 +83,4 @@ fun lala(x, y, z) {
 }
 
 lala(1, 2, 3);
+return foo3;

@@ -1,6 +1,8 @@
 // $Id: k.c,v 1.5 2002/09/05 22:03:51 Administrator Exp $
 
 #include <stdio.h>
+
+#include "gc.h"
 #include "kerr.h"
 #include "keval.h"
 #include "kexec.h"
@@ -21,6 +23,7 @@ int main( int argc, char *argv[] )
 
     printf("Final result\n");
     SD(result);
+    gc(result);
   }
 
   ksym_dump_reasons( "k.reasons.out" );

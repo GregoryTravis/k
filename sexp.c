@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include "fstrm.h"
+#include "hash.h"
 #include "mem.h"
 #include "sexp.h"
 #include "spew.h"
@@ -479,4 +480,51 @@ sexp caddr( sexp s )
   s = cdr( s );
   s = car( s );
   return s;
+}
+
+void walk1(hash *h, sexp s, void (*f)(sexp))
+{
+  A(s);
+  A(SEXP_OK(s));
+
+  if (hashget(h, s) == s) {
+    // Already seen
+    return;
+  }
+
+  hashput(h, s, s);
+  f(s);
+
+  switch (SEXP_TYPE(s)) {
+    case SEXP_NIL:
+    case SEXP_INTEGER:
+    case SEXP_FLOAT:
+    case SEXP_SYMBOL:
+    case SEXP_OBJ:
+    case SEXP_NATIVE:
+    case SEXP_STRING:
+      // nothing
+      break;
+    case SEXP_CONS:
+      walk1(h, car(s), f);
+      walk1(h, cdr(s), f);
+      break;
+    case SEXP_CLOSURE:
+      walk1(h, SEXP_GET_CLOSURE_CODE(s), f);
+      walk1(h, SEXP_GET_CLOSURE_ENV(s), f);
+      break;
+    default:
+      err(("Walk: bad sexp type %d\n", SEXP_TYPE(s)));
+      break;
+  }
+}
+
+void walk(sexp s, void (*f)(sexp))
+{
+  hash *h = makehash(1024);
+
+  walk1(h, s, f);
+
+  // TODO
+  // freehash(h);
 }

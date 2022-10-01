@@ -1,3 +1,6 @@
+(make && k t.k) 2>&1 | tee out
+exit
+
 (make engine && ./engine) 2>&1 | tee out
 exit
 
