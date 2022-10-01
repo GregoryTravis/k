@@ -16,11 +16,14 @@
 
 static int (*obj_dumper)( ostrm *ost, void *stuff ) = 0;
 
-sexp_heap _nil = { SEXP_NIL, NULL, CONST_NIL };
+sexp_heap _nil = { SEXP_NIL, NULL, NULL, CONST_NIL };
 sexp nil = (sexp)&_nil;
 
 SEXP_STATIC_SEXP(True,SEXP_BOOLEAN);
 SEXP_STATIC_SEXP(False,SEXP_BOOLEAN);
+
+// For GC
+sexp_heap *allocated = NULL;
 
 static sexp_heap *new_sexp_heap( void )
 {
@@ -29,6 +32,10 @@ static sexp_heap *new_sexp_heap( void )
   A(!(((long)sh)&SEXP_TAG_BIT_MASK)); // must have tag bits empty
 
   sh->properties = nil;
+
+  // Add to allocation chain
+  sh->gc_next = allocated;
+  allocated = sh;
 
   return sh;
 }
