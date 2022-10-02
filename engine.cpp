@@ -5,5 +5,6 @@
 int main(int argc, char **argv)
 {
   KActor ka;
-  printf("hi\n");
+  float f = ka.Tick(125.0);
+  printf("hi %f\n", f);
 }
