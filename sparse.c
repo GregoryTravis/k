@@ -21,13 +21,13 @@ static sexp sexp_parse_list( char *string, char **next )
     return 0;
   } else if (*string==')') {
     *next = string+1;
-    return nil;
+    return nill;
   } else if (*string=='.') {
     char *endparen;
-    sexp cdr, shouldnil;
+    sexp cdr, shouldnill;
     cdr = sexp_parse_sexp( string+1, &endparen );
-    shouldnil = sexp_parse_list( endparen, next );
-    if (shouldnil != nil) {
+    shouldnill = sexp_parse_list( endparen, next );
+    if (shouldnill != nill) {
       err(( "Bad list-end in %s\n", string ));
     }
     return cdr;

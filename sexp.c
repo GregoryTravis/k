@@ -15,8 +15,8 @@
 
 static int (*obj_dumper)( ostrm *ost, void *stuff ) = 0;
 
-sexp_heap _nil = { SEXP_NIL, NULL, CONST_NIL };
-sexp nil = (sexp)&_nil;
+sexp_heap _nill = { SEXP_NIL, NULL, CONST_NIL };
+sexp nill = (sexp)&_nill;
 
 SEXP_STATIC_SEXP(True,SEXP_BOOLEAN);
 SEXP_STATIC_SEXP(False,SEXP_BOOLEAN);
@@ -27,7 +27,7 @@ static sexp_heap *new_sexp_heap( void )
 
   A(!(((long)sh)&SEXP_TAG_BIT_MASK)); // must have tag bits empty
 
-  sh->properties = nil;
+  sh->properties = nill;
 
   return sh;
 }
@@ -355,13 +355,13 @@ sexp append( sexp lyst1, sexp lyst2 )
   } else {
     SD(lyst1);
     err(( "Can't append lyst1" ));
-    return nil;
+    return nill;
   }
 }
 
 sexp snoc( sexp rdc, sexp rac )
 {
-  return append( rdc, cons( rac, nil ) );
+  return append( rdc, cons( rac, nill ) );
 }
 
 sexp assoc( sexp key, sexp alist )
@@ -370,19 +370,19 @@ sexp assoc( sexp key, sexp alist )
   /* SD(key); */
   /* SD(alist); */
   if (SEXP_IS_NIL( alist )) {
-    return nil;
+    return nill;
   } else if (SEXP_IS_CONS( alist )) {
     if (EQ( key, caar( alist ) )) {
       return car( alist );
     } else {
       return assoc( key, cdr( alist ) );
     }
-    return nil;
+    return nill;
   } else {
     err(( "bad alist" ));
-    return nil;
+    return nill;
   }
-  return nil;
+  return nill;
 }
 
 void setcar( sexp pair, sexp car )
@@ -415,7 +415,7 @@ sexp zipper( sexp cars, sexp cdrs )
 {
   if (SEXP_IS_NIL( cars ) != SEXP_IS_NIL( cdrs )) {
     err(( "Can't zipper!" ));
-    return nil;
+    return nill;
 /*
     if (SEXP_IS_NIL( cars )) {
       return cdrs;
@@ -424,7 +424,7 @@ sexp zipper( sexp cars, sexp cdrs )
     }
 */
   } else if (SEXP_IS_NIL( cars )) {
-    return nil;
+    return nill;
   } else {
     return cons( cons( car( cars ), car( cdrs ) ),
       zipper( cdr( cars ), cdr( cdrs ) ) );

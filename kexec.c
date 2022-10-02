@@ -18,24 +18,24 @@ sexp k_prepare_file( char *filename )
 
   parse = k_read_script( filename );
 
-  KERRPUNTV(nil);
+  KERRPUNTV(nill);
 
   sexp_dump_file( strkat( filename, ".parse.out" ), parse );
 
   sem = k_parse_to_semantic( parse );
 
-  if (k_error || sem == nil) {
+  if (k_error || sem == nill) {
     kerr( "Can't build semantic tree" );
-    KERRPUNTV(nil);
+    KERRPUNTV(nill);
   }
 
   sexp_dump_file( strkat( filename, ".presem.out" ), sem );
 
   sem = ksem_process( sem );
 
-  if (k_error || sem == nil) {
+  if (k_error || sem == nill) {
     kerr( "Semantic processing failure" );
-    KERRPUNTV(nil);
+    KERRPUNTV(nill);
   }
 
   sexp_dump_file( strkat( filename, ".postsem.out" ), sem );
@@ -50,6 +50,6 @@ sexp k_exec_file( char *filename )
   if (!KERR) {
     return k_eval( filename, sem );
   } else {
-    return nil;
+    return nill;
   }
 }

@@ -75,20 +75,20 @@ static sexp feval( sexp env, sexp exp )
 
     kont = feval( env, kont );
     val = feval( env, val );
-    KERRPUNTV(nil);
+    KERRPUNTV(nill);
 
     kenv_put_env( env, var, val );
-    KERRPUNTV(nil);
+    KERRPUNTV(nill);
 
     funcall = sexp_build( "(tramp % %)", kont, val );
-    KERRPUNTV(nil);
+    KERRPUNTV(nill);
 
     return funcall;
   } else if (sexp_scan( exp, "(ftailcall %)", &s )) {
     sexp kont = s;
 
     kont = feval( env, kont );
-    KERRPUNTV(nil);
+    KERRPUNTV(nill);
 
     return sexp_build( "(tramp %)", kont );
   } else if (sexp_scan( exp, "(fgset! % (var %) %)", &s, &ss, &sss )) {
@@ -99,19 +99,19 @@ static sexp feval( sexp env, sexp exp )
 
     kont = feval( env, kont );
     val = feval( env, val );
-    KERRPUNTV(nil);
+    KERRPUNTV(nill);
 
     kenv_global_put_env( env, var, val );
-    KERRPUNTV(nil);
+    KERRPUNTV(nill);
 
     funcall = sexp_build( "(tramp % %)", kont, val );
-    KERRPUNTV(nil);
+    KERRPUNTV(nill);
 
     return funcall;
   } else if (sexp_scan( exp, "(var %)", &s )) {
     sexp val2 = kenv_get_env( env, s );
 //SD(SEXP_PROPERTIES(s));
-    KERRPUNTV(nil);
+    KERRPUNTV(nill);
     return val2;
   } else if (sexp_scan( exp, "(fshow % %)", &s, &ss )) {
     sexp kont = s;
@@ -120,14 +120,14 @@ static sexp feval( sexp env, sexp exp )
 
     kont = feval( env, kont );
     val = feval( env, val );
-    KERRPUNTV(nil);
+    KERRPUNTV(nill);
 
     sexp_dump( val );
     // SD(val);
     fflush( stdout );
 
     funcall = sexp_build( "(tramp % ())", kont );
-    KERRPUNTV(nil);
+    KERRPUNTV(nill);
 
     return funcall;
   } else if (sexp_scan( exp, "(fif % % %)", &s, &ss, &sss )) {
@@ -139,8 +139,8 @@ static sexp feval( sexp env, sexp exp )
     } else {
       SD(s);
       kerr( "Bad value for conditional" );
-      KERRPUNTV(nil);
-      return nil;
+      KERRPUNTV(nill);
+      return nill;
     }
   } else if (sexp_scan( exp, "(finclude % %)", &s, &ss )) {
     sexp kont = s;
@@ -150,28 +150,28 @@ static sexp feval( sexp env, sexp exp )
     kont = feval( env, kont );
 
     k_exec_file( filename );
-    KERRPUNTV(nil);
+    KERRPUNTV(nill);
 
     return sexp_build( "(tramp %)", kont );
   } else {
     SD( env );
     SD( exp );
     err(( "Can't eval!" ));
-    return nil;
+    return nill;
   }
 }
 
 static sexp feval_list( sexp env, sexp exps )
 {
   if (SEXP_IS_NIL( exps )) {
-    return nil;
+    return nill;
   } else if (SEXP_IS_CONS( exps )) {
     return cons( feval( env, car( exps ) ),
       feval_list( env, cdr( exps ) ) );
   } else {
     sexp_dump( exps );
     err(( "Bad feval list!" ));
-    return nil;
+    return nill;
   }
 }
 
@@ -180,22 +180,22 @@ static sexp make_funcall_layer( sexp params, sexp args )
   if (SEXP_IS_CONS( params )) {
     if (!SEXP_IS_CONS( args )) {
       kerr( "Args do not match params (1)" );
-      KERRPUNTV(nil);
-      return nil;
+      KERRPUNTV(nill);
+      return nill;
     } else {
       return cons( cons( car( params ), car( args ) ),
         make_funcall_layer( cdr( params ), cdr( args ) ) );
     }
   } else if (SEXP_IS_NIL( params )) {
     if (SEXP_IS_NIL( args )) {
-      return nil;
+      return nill;
     } else {
       kerr( "Args do not match params (2)" );
-      KERRPUNTV(nil);
-      return nil;
+      KERRPUNTV(nill);
+      return nill;
     }
   } else {
-    return cons( cons( params, args ), nil );
+    return cons( cons( params, args ), nill );
   }
 }
 
@@ -234,7 +234,7 @@ static sexp eval_apply( sexp funcall )
         SD(lambda_params);
         SD(args);
       }
-      KERRPUNTV(nil);
+      KERRPUNTV(nill);
       nuenv = kenv_add_layer( lambda_env, nulayer );
       return feval( nuenv, lambda_body );
     } else {
@@ -245,9 +245,9 @@ static sexp eval_apply( sexp funcall )
   } else {
     SD( funcall );
     err(( "Can't apply!" ));
-    return nil;
+    return nill;
   }
-  return nil;
+  return nill;
 }
 
 /*
@@ -285,7 +285,7 @@ static sexp eval_trampoline( sexp tramp, sexp topk )
     if (sexp_scan( tramp, "(tramp . %)", &dummy )) {
       tramp = eval_apply( tramp );
 
-      KERRPUNTV(nil);
+      KERRPUNTV(nill);
     } else {
       return tramp;
     }
@@ -308,7 +308,7 @@ sexp k_eval( char *filename, sexp sem )
 
   sexp_dump_file( strkat( filename, ".cps.out" ), sem );
 
-  KERRPUNTV(nil);
+  KERRPUNTV(nill);
 
   fun = cadr( sem );
   arg = caddr( sem );

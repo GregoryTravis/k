@@ -38,15 +38,15 @@ KActor::KActor()
   sexp SetLocation_delegate_sexp =
     mknative(&SetLocation_delegate_sexp_native, strdup("SetLocation_delegate_sexp_native"));
   sexp super = ke_call_constructor(super_class,
-      cons(kthis, cons(SetLocation_delegate_sexp, nil)));
+      cons(kthis, cons(SetLocation_delegate_sexp, nill)));
 
   sexp clas = ke_exec_file("kactor.k");
-  kdelegate = ke_call_constructor(clas, cons(super, nil));
+  kdelegate = ke_call_constructor(clas, cons(super, nill));
 }
 
 float KActor::Tick(float DeltaTime)
 {
-  sexp result = ke_call_method(kdelegate, "tick", cons(SEXP_MKINT((int)DeltaTime), nil));
+  sexp result = ke_call_method(kdelegate, "tick", cons(SEXP_MKINT((int)DeltaTime), nill));
   float f = (float)SEXP_GET_INTEGER(result);
   KESD(result);
   return f;

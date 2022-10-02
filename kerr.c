@@ -24,7 +24,7 @@ void kerr( char *f, ... )
   k_error = 1;
 
   va_start(va,f);
-  vkerr( nil, f, va );
+  vkerr( nill, f, va );
   va_end(va);
 }
 
@@ -63,7 +63,7 @@ static void show_where( FILE *file, sexp where )
   sexp locinfo = SEXP_PROPERTIES( where );
   sexp filename_s, start_line_s, end_line_s, start_char_s, end_char_s, start_gchar_s, end_gchar_s;
 
-  if (locinfo == nil) {
+  if (locinfo == nill) {
     fprintf( file, "(No location info): " );
   } else if (locinfo != 0 &&
       sexp_scan( locinfo, "((file %)(line % %) (char % %) (gchar % %))",
@@ -108,7 +108,7 @@ void k_err_dump( FILE *file )
 
   fprintf( file, "Errors:\n" );
 
-  while (e != nil) {
+  while (e != nill) {
     sexp s, ss, sss;
 
     if (sexp_scan( e, "(((message %)(where %)) . %)", &s, &ss, &sss )) {
@@ -128,7 +128,7 @@ void k_err_dump( FILE *file )
 
 void k_err_reset( void )
 {
-  errors = nil;
+  errors = nill;
   k_error = 0;
 }
 

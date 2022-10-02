@@ -28,5 +28,5 @@ DEFPRIM(import)
 
   k_exec_file( strdoop( buf ) );
 
-  return nil;
+  return nill;
 }

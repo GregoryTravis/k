@@ -27,7 +27,7 @@ sexp ksym_new_sym( void )
 void ksym_set_reason( sexp symbol, char *text, sexp info )
 {
   if (reasons==0)
-    reasons = nil;
+    reasons = nill;
 
   reasons = cons( L3( symbol, SEXP_MKSTRING( text ), info ), reasons );
 }

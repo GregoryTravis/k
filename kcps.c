@@ -28,7 +28,7 @@ static sexp convert_funcall( sexp sem, sexp kont, sexp accum )
 
   } else {
     err(( "Bad funcall" ));
-    return nil;
+    return nill;
   }
 }
 
@@ -94,9 +94,9 @@ static sexp convert_block( sexp stmts, sexp kont )
     }
   } else {
     err(( "Bad blambda" ));
-    return nil;
+    return nill;
   }
-  return nil;
+  return nill;
 }
 
 sexp kcps_convert( sexp sem, sexp kont )
@@ -108,12 +108,12 @@ sexp kcps_convert( sexp sem, sexp kont )
   A(SEXP_OK(kont));
 
   if (sexp_scan( sem, "(funcall . %)", &s )) {
-    return convert_funcall( s, kont, nil );
+    return convert_funcall( s, kont, nill );
   } else if (sexp_scan( sem, "(lambda % . %)", &s, &ss ) ||
              sexp_scan( sem, "(ilambda % . %)", &s, &ss )) {
     int internal;
     sexp lambda, dummy;
-    sexp kontname = nil;
+    sexp kontname = nill;
 
     sexp body = ss;
 

@@ -17,7 +17,7 @@ class ssrc
 
   public fun get() {
     show "default get()";
-    return nil;
+    return nill;
   }
 }
 
@@ -63,7 +63,7 @@ fun sf1( sink )
   for (var i=0; i<10; i=i+1) {
     sink.put( i );
   }
-  sink.put( nil );
+  sink.put( nill );
 }
 
 fun double( src ) {
@@ -85,7 +85,7 @@ fun dumpsrc( src )
   while (done==false) {
     var v = src.get();
     show( "src "+count+" "+v );
-    if (v==nil) {
+    if (v==nill) {
       done = true;
     } else {
       count = count+1;

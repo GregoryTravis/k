@@ -12,8 +12,8 @@ DEFPRIM(cons)
 
   if (length( arglist ) != 2) {
     kerr( "Wrong number of args for cons!" );
-    KERRPUNTV(nil);
-    return nil;
+    KERRPUNTV(nill);
+    return nill;
   } else {
     sexp a = car( arglist );
     sexp d = cadr( arglist );
@@ -27,8 +27,8 @@ DEFPRIM(car)
 
   if (length( arglist ) != 1) {
     kerr( "Wrong number of args for car!" );
-    KERRPUNTV(nil);
-    return nil;
+    KERRPUNTV(nill);
+    return nill;
   } else {
     sexp p = car( arglist );
     return car( p );
@@ -41,8 +41,8 @@ DEFPRIM(cdr)
 
   if (length( arglist ) != 1) {
     kerr( "Wrong number of args for cdr!" );
-    KERRPUNTV(nil);
-    return nil;
+    KERRPUNTV(nill);
+    return nill;
   } else {
     sexp p = car( arglist );
     return cdr( p );
@@ -57,8 +57,8 @@ DEFPRIM(assoc)
 
   if (length( arglist ) != 2) {
     kerr( "Wrong number of args for arglist!" );
-    KERRPUNTV(nil);
-    return nil;
+    KERRPUNTV(nill);
+    return nill;
   } else {
     sexp key = car( arglist );
     sexp alist = cadr( arglist );

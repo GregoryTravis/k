@@ -5,12 +5,12 @@ fun objectlookup(name, type, obj)
   show type;
   show obj;
   var gs = assoc(name, obj);
-  if (gs == nil) {
-    show "nil";
+  if (gs == nill) {
+    show "nill";
     panic();
   } else {
     var v = assoc(type, cdr(gs));
-    if (v == nil) {
+    if (v == nill) {
       panic();
     } else {
       return cdr(v);
@@ -20,8 +20,8 @@ fun objectlookup(name, type, obj)
 
 class super
 {
-  public var kactor = nil;
-  public var setLocation_delegate = nil;
+  public var kactor = nill;
+  public var setLocation_delegate = nill;
 
   public fun super(_kactor, _setLocation_delegate) {
     kactor = _kactor;

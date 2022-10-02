@@ -18,7 +18,7 @@ sexp boolop_##_name( sexp arglist )                   \
     sexp_dump( arglist );                             \
     kerr( "Wrong number of args for something" );     \
   }                                                   \
-  KERRPUNTV(nil);                                     \
+  KERRPUNTV(nill);                                     \
                                                       \
   a = car( arglist );                                 \
   b = cadr( arglist );                                \
@@ -43,8 +43,8 @@ sexp boolop_##_name( sexp arglist )                   \
     return val;                                       \
   }                                                   \
                                                       \
-  KERRPUNTV(nil);                                     \
-  return nil;                                         \
+  KERRPUNTV(nill);                                     \
+  return nill;                                         \
 }
 
 DECLBOOLEANOP(&&,andand);

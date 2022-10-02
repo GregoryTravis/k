@@ -502,7 +502,7 @@ EOF
         print yacc " %prec _TOK_$alt->{prec}";
       }
       print yacc " {\n";
-      print yacc "      sexp s = nil;\n";
+      print yacc "      sexp s = nill;\n";
       my $nterms = @$terms;
       my $inx=$nterms;
       foreach $term (reverse @$terms) {
@@ -536,11 +536,11 @@ EOF
         print yacc "    };\n";
         if ($multiplier eq "*") {
           print yacc "  | /* empty */ {\n";
-          print yacc "    \$\$ = nil;\n";
+          print yacc "    \$\$ = nill;\n";
           print yacc "    };\n\n";
         } else {
           print yacc "  | $sequencetarget {\n";
-          print yacc "    sexp s = cons( \$1, nil );\n";
+          print yacc "    sexp s = cons( \$1, nill );\n";
           print yacc "    \$\$ = s;\n";
           print yacc "    };\n\n";
         }
@@ -552,20 +552,20 @@ EOF
           print yacc "      \$\$ = \$1;\n";
           print yacc "    }\n";
           print yacc "  | /* empty */ {\n";
-          print yacc "      \$\$ = nil;\n";
+          print yacc "      \$\$ = nill;\n";
           print yacc "    };\n\n";
           print yacc "$second: $sequencetarget $splitter $second {\n";
           print yacc "    \$\$ = cons( \$1, \$3 );\n";
           print yacc "    }\n";
           print yacc "  | $sequencetarget {\n";
-          print yacc "      \$\$ = cons( \$1, nil );\n";
+          print yacc "      \$\$ = cons( \$1, nill );\n";
           print yacc "    };\n\n";
         } else {
           print yacc "$sequencename: $sequencetarget $splitter $sequencename {\n";
           print yacc "    \$\$ = cons( \$1, \$3 );\n";
           print yacc "    }\n";
           print yacc "  | $sequencetarget {\n";
-          print yacc "      \$\$ = cons( \$1, nil );\n";
+          print yacc "      \$\$ = cons( \$1, nill );\n";
           print yacc "    };\n\n";
         }
       }
@@ -587,7 +587,7 @@ EOF
         print yacc "  s = mksym( strdoop( yytext ) );\n";
       }
       print yacc "  SEXP_PROPERTIES( s ) = __${stub}_where_stamp();\n";
-      #print yacc "  SEXP_PROPERTIES( s ) = nil;\n";
+      #print yacc "  SEXP_PROPERTIES( s ) = nill;\n";
       print yacc "  \$\$ = s;\n";
       print yacc " };\n";
     }
@@ -631,7 +631,7 @@ sexp ${stub}_parse( char *filename, FILE *instream )
   __${stub}_filename = filename == NULL ? "[NULL]" : filename;
 
   if (yyparse()) {
-    return nil;
+    return nill;
   } else {
     return _ccc_top;
   }

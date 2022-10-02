@@ -28,7 +28,7 @@ static sexp get_env_pair( sexp env, sexp name )
 
   layers = env;
 
-  while (layers != nil) {
+  while (layers != nill) {
    sexp pair;
 
    A(SEXP_OK(layers));
@@ -43,14 +43,14 @@ static sexp get_env_pair( sexp env, sexp name )
 
   //SD( env );
   kerrw( name, "Unknown variable '%s'", STR(name) );
-  return nil;
+  return nill;
 }
 
 sexp kenv_get_env( sexp env, sexp name )
 {
   sexp pair = get_env_pair( env, name );
 
-  KERRPUNTV(nil);
+  KERRPUNTV(nill);
 
   return cdr( pair );
 }
@@ -75,18 +75,18 @@ static void add_pair_to_layer( sexp layer, sexp pair )
 
 static sexp get_last_layer( sexp env )
 {
-  if (env==nil) {
-    err(( "Can't get last layer of nil" ));
-    return nil;
+  if (env==nill) {
+    err(( "Can't get last layer of nill" ));
+    return nill;
   } else if (SEXP_IS_CONS(env)) {
-    if (cdr( env )==nil) {
+    if (cdr( env )==nill) {
       return car( env );
     } else {
       return get_last_layer( cdr( env ) );
     }
   } else {
     err(( "Can't get last layer of type %d", SEXP_TYPE(env) ));
-    return nil;
+    return nill;
   }
 }
 
@@ -97,7 +97,7 @@ void kenv_global_put_env( sexp env, sexp name, sexp value )
 
   pair = assoc( name, cdr( global ) );
 
-  if (pair == nil) {
+  if (pair == nill) {
     add_pair_to_layer( global, cons( name, value ) );
   } else {
     setcdr( pair, value );
@@ -115,7 +115,7 @@ sexp kenv_add_layer( sexp env, sexp layer )
 #if 0
 sexp kenv_make_env( void )
 {
-  return nil;
+  return nill;
 }
 
 void kenv_put_env( sexp env, sexp name, sexp value )
@@ -131,7 +131,7 @@ void kenv_put_env( sexp env, sexp name, sexp value )
   } else {
     sexp alist = car( env );
     sexp p = assoc( name, alist );
-    if (p==nil) {
+    if (p==nill) {
       return kenv_put_env( cdr( env ), name, value );
     } else {
       setcdr( p, value );
@@ -151,13 +151,13 @@ sexp kenv_get_env( sexp env, sexp name )
   } else {
     sexp alist = car( env );
     sexp p = assoc( name, alist );
-    if (p==nil) {
+    if (p==nill) {
       return kenv_get_env( cdr( env ), name );
     } else {
       return cdr( p );
     }
   }
-  return nil;
+  return nill;
 }
 
 sexp kenv_get_layer( sexp env, int which )
@@ -167,14 +167,14 @@ sexp kenv_get_layer( sexp env, int which )
       return car( env );
     } else {
       err(( "Can't get env layer" ));
-      return nil;
+      return nill;
     }
   } else {
     if (SEXP_IS_CONS( env )) {
       return kenv_get_layer( cdr( env ), which-1 );
     } else {
       err(( "Can't get env layer" ));
-      return nil;
+      return nill;
     }
   }
 }
@@ -206,6 +206,6 @@ sexp kenv_add_to_layer( sexp layer, sexp name, sexp value )
 
 sexp kenv_make_layer( void )
 {
-  return nil;
+  return nill;
 }
 #endif

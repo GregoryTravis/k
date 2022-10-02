@@ -5,12 +5,12 @@ fun objectlookup(name, type, obj)
   //show type;
   //show obj;
   var gs = assoc(name, obj);
-  if (gs == nil) {
-    show "nil";
+  if (gs == nill) {
+    show "nill";
     panic();
   } else {
     var v = assoc(type, cdr(gs));
-    if (v == nil) {
+    if (v == nill) {
       panic();
     } else {
       return cdr(v);
@@ -20,8 +20,8 @@ fun objectlookup(name, type, obj)
 
 class foo
 {
-  public var a = nil;
-  public var b = nil;
+  public var a = nill;
+  public var b = nill;
 
   public fun foo(_a, _b) {
     a = _a;
@@ -43,9 +43,9 @@ class foo
 
 class foo3
 {
-  public var a = nil;
-  public var b = nil;
-  public var c = nil;
+  public var a = nill;
+  public var b = nill;
+  public var c = nill;
 
   public fun foo3(_a, _b, _c) {
     a = _a;

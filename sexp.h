@@ -116,7 +116,7 @@ typedef struct sexp_heap {
 #define SEXP_TYPE_OK(t) ((t)>=SEXP_MIN && (t)<=SEXP_MAX)
 #define SEXP_OK(s) (((s)!=0)&&(SEXP_TYPE_OK(SEXP_TYPE((s)))))
 
-#define SEXP_IS_NIL(s) (A((s)),((s)==nil))
+#define SEXP_IS_NIL(s) (A((s)),((s)==nill))
 #define SEXP_IS_SYMBOL(s) (A((s)),(SEXP_TYPE((s))==SEXP_SYMBOL))
 #define SEXP_IS_CONS(s) (A((s)),(SEXP_TYPE((s))==SEXP_CONS))
 #define SEXP_IS_HASH(s) (A((s)),(SEXP_TYPE((s))==SEXP_HASH))
@@ -192,13 +192,13 @@ sexp mkstring( char *string );
 #define SEXP_STATIC_SYMBOL(varname,symname) \
   sexp_heap _##varname = { SEXP_SYMBOL, #symname, CONST_NIL }; sexp varname = (sexp)&_##varname
 
-extern sexp nil;
-extern sexp_heap _nil;
-#define CONST_NIL ((sexp)&(_nil))
+extern sexp nill;
+extern sexp_heap _nill;
+#define CONST_NIL ((sexp)&(_nill))
 extern sexp True;
 extern sexp False;
 
-#define L1(a) (cons((a),nil))
+#define L1(a) (cons((a),nill))
 #define L2(a,b) (cons((a),L1((b))))
 #define L3(a,b,c) (cons((a),L2((b),(c))))
 #define L4(a,b,c,d) (cons((a),L3((b),(c),(d))))
@@ -236,7 +236,7 @@ void sexp_dump_closure( sexp sexp );
 #define FORLIST(_elem,_list,_code)                               \
   do {                                                           \
     sexp __list = _list, _cursor;                                \
-    for (_cursor=__list; _cursor!=nil; _cursor=cdr( _cursor )) { \
+    for (_cursor=__list; _cursor!=nill; _cursor=cdr( _cursor )) { \
       sexp _elem;                                                \
                                                                  \
       A(SEXP_IS_CONS( _cursor ));                                \

@@ -27,14 +27,18 @@ PARSER_GENERATED = kp.c kp.output kp.tab.c kp.tab.h kp.exe kp.grammar \
 GENERATED = k k.a engine shavtest *.o $(PARSER_GENERATED)
 COMMON_DEPS = kstruct.h
 
-ENGINE_OBJS = engine.o KActor.o kembed.o
+EMBED_OBJS = kembed.o
+ENGINE_OBJS = $(EMBED_OBJS) KActor.o engine.o
 
 k: $(K_OBJS)
 	@# $(CC) -Lgc6.0/.libs $(LDFLAGS) -o k $(K_OBJS) -lgc
 	$(CC) $(LDFLAGS) -o k $(K_OBJS)
 
 k.a: $(K_OBJS)
-	libtool -static -o k.a *.o
+	libtool -static -o k.a $(K_OBJS)
+
+embed.a: ${K_OBJS} $(EMBED_OBJS)
+	libtool -static -o embed.a $(K_OBJS) $(EMBED_OBJS)
 
 engine: $(K_LIB) $(ENGINE_OBJS)
 	$(CPP) $(LDFLAGS) -o engine $(K_LIB) $(ENGINE_OBJS)

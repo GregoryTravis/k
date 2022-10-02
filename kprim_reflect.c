@@ -11,15 +11,15 @@ DEFPRIM(closure_get_code)
 
   if (length( arglist ) != 1) {
     kerr( "Wrong number of args for closure_show_code" );
-    KERRPUNTV(nil);
-    return nil;
+    KERRPUNTV(nill);
+    return nill;
   } else {
     sexp closure = car( arglist );
 
     if (!SEXP_IS_CLOSURE( closure )) {
       kerr( "Error: not a closure" );
-      KERRPUNTV(nil);
-      return nil;
+      KERRPUNTV(nill);
+      return nill;
     } else {
       return SEXP_GET_CLOSURE_CODE( closure );
     }

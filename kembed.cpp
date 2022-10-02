@@ -36,7 +36,7 @@ sexp ke_call_method(sexp obj, const char *method_name, sexp args)
       sexp_build(strdup("(% get)"), mksym(strdup(method_name))));
   //KESD(result3);
   //sexp_dump_closure(result3);
-  sexp result4 = ke_apply_compiled_function(result3, nil);
+  sexp result4 = ke_apply_compiled_function(result3, nill);
   //KESD(result4);
   //sexp_dump_closure(result4);
   sexp result5 = ke_apply_compiled_function(result4, args);

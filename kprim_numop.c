@@ -34,7 +34,7 @@ static sexp numop_generic( sexp arglist, int (*intp)( int, int ), float (*floatp
     sexp_dump( arglist );
     kerr( "Wrong number of args for %s", name );
   }
-  KERRPUNTV(nil);
+  KERRPUNTV(nill);
 
   a = car( arglist );
   b = cadr( arglist );
@@ -63,8 +63,8 @@ static sexp numop_generic( sexp arglist, int (*intp)( int, int ), float (*floatp
     sexp_dump( b );
     kerr( "Bad argument types for %s (1)", name );
   }
-  KERRPUNTV(nil);
-  return nil;
+  KERRPUNTV(nill);
+  return nill;
 }
 
 #define DEFPRIMCONDOP(t,name,type) \
@@ -116,7 +116,7 @@ static sexp condop_generic( sexp arglist, sexp (*intp)( int, int ),
     sexp_dump( arglist );
     kerr( "Wrong number of args for %s", name );
   }
-  KERRPUNTV(nil);
+  KERRPUNTV(nill);
 
   a = car( arglist );
   b = cadr( arglist );
@@ -141,8 +141,8 @@ static sexp condop_generic( sexp arglist, sexp (*intp)( int, int ),
     sexp_dump( b );
     kerr( "Bad argument types for %s (2)", name );
   }
-  KERRPUNTV(nil);
-  return nil;
+  KERRPUNTV(nill);
+  return nill;
 }
 
 static sexp gcondop_generic( sexp arglist, sexp (*intp)( int, int ),
@@ -156,7 +156,7 @@ static sexp gcondop_generic( sexp arglist, sexp (*intp)( int, int ),
     sexp_dump( arglist );
     kerr( "Wrong number of args for %s", name );
   }
-  KERRPUNTV(nil);
+  KERRPUNTV(nill);
 
   a = car( arglist );
   b = cadr( arglist );
@@ -189,8 +189,8 @@ static sexp gcondop_generic( sexp arglist, sexp (*intp)( int, int ),
   } else {
     return (*sexpp)( a, b );
   }
-  KERRPUNTV(nil);
-  return nil;
+  KERRPUNTV(nill);
+  return nill;
 }
 
 NUMOP(-,minus)
@@ -214,7 +214,7 @@ sexp numop_plus( sexp arglist )
     sexp_dump( arglist );
     kerr( "Wrong number of args for %s", name );
   }
-  KERRPUNTV(nil);
+  KERRPUNTV(nill);
 
   a = car( arglist );
   b = cadr( arglist );
@@ -278,6 +278,6 @@ sexp numop_plus( sexp arglist )
     sexp_dump( b );
     kerr( "Bad argument types for %s (3)", name );
   }
-  KERRPUNTV(nil);
-  return nil;
+  KERRPUNTV(nill);
+  return nill;
 }

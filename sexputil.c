@@ -10,7 +10,7 @@ sexp cars( sexp lyst )
     return cons( car( car( lyst ) ), cars( cdr( lyst ) ) );
   } else {
     err(( "Bad lyst for cars" ));
-    return nil;
+    return nill;
   }
 }
 
@@ -22,6 +22,6 @@ sexp cadrs( sexp lyst )
     return cons( cadr( car( lyst ) ), cadrs( cdr( lyst ) ) );
   } else {
     err(( "Bad lyst for cars" ));
-    return nil;
+    return nill;
   }
 }

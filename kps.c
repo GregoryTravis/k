@@ -18,7 +18,7 @@ static sexp pts_list( sexp p )
   } else {
     SD( p );
     err(( "kps_convert: unknown construct" ));
-    return nil;
+    return nill;
     //return pts( p );
   }
 }
@@ -34,7 +34,7 @@ static sexp pts_decls( sexp decls )
   } else {
     SD( decls );
     err(( "Bad decls list for pts_decls" ));
-    return nil;
+    return nill;
   }
 }
 
@@ -73,7 +73,7 @@ static sexp pts( sexp p )
   } else if (sexp_scan( p, "(expression boolconst %)", &s )) {
     int b = !strcmp( STR(s), "true" );
     return sexp_build( "(const %)", SEXP_MKBOOLEAN( b ) );
-  } else if (sexp_scan( p, "(expression nil %)", &s )) {
+  } else if (sexp_scan( p, "(expression nill %)", &s )) {
     return sexp_build( "(const ())" );
   } else if (sexp_scan( p, "(statement returnargs return %)", &s )) {
     return sexp_build( "(return %)", pts( s ) );
@@ -144,7 +144,7 @@ static sexp pts( sexp p )
   } else {
     SD( p );
     err(( "kps_convert: unknown construct" ));
-    return nil;
+    return nill;
   }
 }
 

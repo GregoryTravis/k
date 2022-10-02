@@ -35,5 +35,5 @@ void kprim_add_prims( sexp env )
 
   ADDPRIM( env, closure_get_code );
 
-  kenv_global_put_env( env, mksym( "nil" ), nil );
+  kenv_global_put_env( env, mksym( "nill" ), nill );
 }

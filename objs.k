@@ -1,12 +1,12 @@
 fun objectlookup(name, type, obj)
 {
   var gs = assoc(name, obj);
-  if (gs == nil) {
-    show "nil";
+  if (gs == nill) {
+    show "nill";
     panic();
   } else {
     var v = assoc(type, cdr(gs));
-    if (v == nil) {
+    if (v == nill) {
       panic();
     } else {
       return cdr(v);

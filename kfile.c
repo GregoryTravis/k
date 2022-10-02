@@ -21,14 +21,14 @@ sexp k_read_script( char *filename )
   if (!KERR) {
     parse = kp_parse( filename, infile );
 
-    if (parse==nil) {
+    if (parse==nill) {
       kerr( "Parse error in %s\n", filename );
     }
   }
 
   fclose(infile);
 
-  KERRPUNTV(nil);
+  KERRPUNTV(nill);
 
   return parse;
 }

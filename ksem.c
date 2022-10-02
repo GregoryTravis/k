@@ -17,7 +17,7 @@ static sexp process_list( sexp lyst )
   } else {
     SD( lyst );
     err(( "Bad lyst for process_list" ));
-    return nil;
+    return nill;
   }
 }
 
@@ -25,12 +25,12 @@ static sexp process_class_body( sexp classname, sexp classbody )
 {
   sexp s, ss, sss, ssss;
   sexp c;
-  sexp declrec = nil;
-  sexp exports = nil;
-  sexp exporter = nil;
-  sexp clasz = nil;
-  sexp ctor = nil;
-  sexp ctorparams = nil;
+  sexp declrec = nill;
+  sexp exports = nill;
+  sexp exporter = nill;
+  sexp clasz = nill;
+  sexp ctor = nill;
+  sexp ctorparams = nill;
 
 //SD(classbody);
 
@@ -126,8 +126,8 @@ static sexp process_body( sexp lyst )
       return sexp_build( "((funcall (ilambda % . %) . %))",
         cars( s ), process_body( cdr( lyst ) ), process_list( cadrs( s ) ) );
     } else if (sexp_scan( car( lyst ), "(declrec . %)", &s )) {
-      sexp decl = nil;
-      sexp sets = nil;
+      sexp decl = nill;
+      sexp sets = nill;
       FORLIST( de, s, {
         decl = sexp_build( "((% (const 0)) . %)", car( de ), decl );
         sets = sexp_build( "((set! (var %) %) . %)", car( de ), cadr( de ), sets );
@@ -163,15 +163,15 @@ static sexp process_body( sexp lyst )
     }
   } else {
     err(( "Bad lyst for process_list" ));
-    return nil;
+    return nill;
   }
 }
 
 static sexp process_gdecl( sexp sem )
 {
 //SM(gdecl,sem);
-  if (sem==nil) {
-    return nil;
+  if (sem==nill) {
+    return nill;
   } else if (SEXP_IS_CONS( sem )) {
     return sexp_build( "((gset! (var %) %) . %)",
       car( car( sem ) ),
@@ -180,7 +180,7 @@ static sexp process_gdecl( sexp sem )
   } else {
     SD(sem);
     err(( "Bad gdecls!" ));
-    return nil;
+    return nill;
   }
 }
 
@@ -262,7 +262,7 @@ sexp ksem_process( sexp sem )
   } else {
     SD( sem );
     err(( "ksem_process: unknown construct\n" ));
-    return nil;
+    return nill;
 //    return sem;
   }
 }

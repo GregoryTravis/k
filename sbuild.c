@@ -94,7 +94,7 @@ static sexp build_from_template( sexp s, va_list *va )
       break;
   }
   A(0);
-  return nil;
+  return nill;
 }
 
 sexp sexp_build( char *format, ... )
