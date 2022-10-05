@@ -28,6 +28,27 @@ sexp SetLocation_delegate_sexp_native(sexp arglist)
   return ns;
 }
 
+FVector KActor::GetActorLocation()
+{
+  FVector fv = { 1.0, 2.0, 3.0 };
+  return fv;
+}
+
+sexp GetActorLocation_delegate_sexp_native(sexp arglist)
+{
+  A(length(arglist) == 1);
+
+  sexp kactor_sexp = car(arglist);
+  KActor *kactor = (KActor*)SEXP_GET_OBJ(kactor_sexp);
+  FVector location = kactor->GetActorLocation();
+  printf("Returning fvector\n");
+  sexp location_sexp = ke_call_constructor(kactor->fvector_class,
+      L3(SEXP_MKINT((int)location.X),
+         SEXP_MKINT((int)location.Y),
+         SEXP_MKINT((int)location.Z)));
+  return location_sexp;
+}
+
 KActor::KActor()
 {
   ke_init();
@@ -35,12 +56,19 @@ KActor::KActor()
   sexp super_class = ke_exec_file("super.k");
   KESD(super_class);
   sexp kthis = SEXP_MKOBJ(this);
+
   sexp SetLocation_delegate_sexp =
     mknative(&SetLocation_delegate_sexp_native, strdup("SetLocation_delegate_sexp_native"));
-  sexp super = ke_call_constructor(super_class, L2(kthis, SetLocation_delegate_sexp));
+  sexp GetActorLocation_delegate_sexp =
+    mknative(&GetActorLocation_delegate_sexp_native, strdup("GetActorLocation_delegate_sexp_native"));
+  sexp super = ke_call_constructor(super_class,
+      L3(kthis,
+         SetLocation_delegate_sexp,
+         GetActorLocation_delegate_sexp));
 
   sexp clas = ke_exec_file("kactor.k");
   kdelegate = ke_call_constructor(clas, L1(super));
+  fvector_class = ke_exec_file("fvector.k");
 }
 
 float KActor::Tick(float DeltaTime)

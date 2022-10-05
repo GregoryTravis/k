@@ -27,6 +27,8 @@ sexp ke_apply_compiled_function(sexp compiled_function, sexp args) {
 
 sexp ke_call_constructor(sexp ctor, sexp args)
 {
+  /* printf("CALL CTOR\n"); */
+  /* KESD(ctor); */
   return ke_apply_compiled_function(cdr(car(ctor)), args);
 }
 

@@ -7,6 +7,13 @@ class kactor
   }
 
   public fun tick(n) {
+    var current_location = super.getActorLocation();
+    show "CURRENT LOCATION\n";
+    show current_location;
+    show current_location.x;
+    show current_location.y;
+    show current_location.z;
+    show "CURRENT LOCATION done\n";
     var n2 = setLocation(1, 2, 3);
     return n + n2;
   }

@@ -238,7 +238,7 @@ static sexp eval_apply( sexp funcall )
       nuenv = kenv_add_layer( lambda_env, nulayer );
       return feval( nuenv, lambda_body );
     } else {
-      printf("Bad closure");
+      printf("Bad closure\n");
       SD(func);
       err(( "Bad closure!" ));
     }
