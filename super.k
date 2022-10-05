@@ -1,23 +1,3 @@
-fun objectlookup(name, type, obj)
-{
-  show "asdfasdf";
-  show name;
-  show type;
-  show obj;
-  var gs = assoc(name, obj);
-  if (gs == nill) {
-    show "nill";
-    panic();
-  } else {
-    var v = assoc(type, cdr(gs));
-    if (v == nill) {
-      panic();
-    } else {
-      return cdr(v);
-    }
-  }
-}
-
 class super
 {
   public var kactor = nill;

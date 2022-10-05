@@ -1,19 +1,3 @@
-fun objectlookup(name, type, obj)
-{
-  var gs = assoc(name, obj);
-  if (gs == nill) {
-    show "nill";
-    panic();
-  } else {
-    var v = assoc(type, cdr(gs));
-    if (v == nill) {
-      panic();
-    } else {
-      return cdr(v);
-    }
-  }
-}
-
 class ssink
 {
   public var q = 10;

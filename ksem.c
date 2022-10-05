@@ -95,7 +95,7 @@ static sexp process_class_body( sexp classname, sexp classbody )
   } );
 
   exporter =
-    sexp_build( "(lambda (name type) (return (funcall (var objectlookup) (var name) (var type) %)))",
+    sexp_build( "(lambda (name type) (return (funcall (var object_lookup) (var name) (var type) %)))",
       exporter );
 
   FORLIST( ctorparam, cadr( ctor ), {
