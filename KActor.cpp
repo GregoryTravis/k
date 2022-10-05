@@ -37,16 +37,15 @@ KActor::KActor()
   sexp kthis = SEXP_MKOBJ(this);
   sexp SetLocation_delegate_sexp =
     mknative(&SetLocation_delegate_sexp_native, strdup("SetLocation_delegate_sexp_native"));
-  sexp super = ke_call_constructor(super_class,
-      cons(kthis, cons(SetLocation_delegate_sexp, nill)));
+  sexp super = ke_call_constructor(super_class, L2(kthis, SetLocation_delegate_sexp));
 
   sexp clas = ke_exec_file("kactor.k");
-  kdelegate = ke_call_constructor(clas, cons(super, nill));
+  kdelegate = ke_call_constructor(clas, L1(super));
 }
 
 float KActor::Tick(float DeltaTime)
 {
-  sexp result = ke_call_method(kdelegate, "tick", cons(SEXP_MKINT((int)DeltaTime), nill));
+  sexp result = ke_call_method(kdelegate, "tick", L1(SEXP_MKINT((int)DeltaTime)));
   float f = (float)SEXP_GET_INTEGER(result);
   KESD(result);
   return f;
