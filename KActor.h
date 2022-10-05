@@ -8,6 +8,12 @@ typedef struct FVector {
   float Z;
 } FVector;
 
+typedef struct FRotator {
+  float Pitch;
+  float Roll;
+  float Yaw;
+} FRotator;
+
 class KActor
 {
 public:	
@@ -17,10 +23,12 @@ public:
   virtual float SetLocation(float x, float y, float z);
 
   FVector GetActorLocation();
+  FRotator GetActorRotation();
 
   float heightScale;
 
   sexp fvector_class;
+  sexp frotator_class;
 
 private:
   sexp kdelegate;

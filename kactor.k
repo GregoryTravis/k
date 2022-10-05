@@ -13,7 +13,20 @@ class kactor
     show current_location.x;
     show current_location.y;
     show current_location.z;
+    current_location.z = current_location.z * 10;
+    show current_location.z;
     show "CURRENT LOCATION done\n";
+
+    var current_rotation = super.getActorRotation();
+    show "CURRENT rotation\n";
+    show current_rotation;
+    show current_rotation.roll;
+    show current_rotation.pitch;
+    show current_rotation.yaw;
+    current_rotation.yaw = current_rotation.yaw * 10;
+    show current_rotation.yaw;
+    show "CURRENT rotation done\n";
+
     var n2 = setLocation(1, 2, 3);
     return n + n2;
   }
