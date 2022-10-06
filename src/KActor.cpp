@@ -117,7 +117,7 @@ KActor::KActor()
   ke_init();
 
   sexp super_class = ke_exec_file("super.k");
-  KESD(super_class);
+  // KESD(super_class);
   sexp kthis = SEXP_MKOBJ(this);
 
   sexp GetActorLocation_delegate_sexp =
