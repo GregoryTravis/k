@@ -27,18 +27,18 @@ bool KActor::SetActorLocationAndRotation(FVector fv, FRotator fr)
 sexp FVector_to_fvector(KActor *kactor, FVector fv)
 {
   sexp r = ke_call_constructor(kactor->fvector_class,
-    L3(SEXP_MKINT((int)fv.X),
-       SEXP_MKINT((int)fv.Y),
-       SEXP_MKINT((int)fv.Z)));
+    L3(SEXP_MKFLOAT(fv.X),
+       SEXP_MKFLOAT(fv.Y),
+       SEXP_MKFLOAT(fv.Z)));
   return r;
 }
 
 sexp FRotator_to_frotator(KActor *kactor, FRotator fr)
 {
   return ke_call_constructor(kactor->frotator_class,
-    L3(SEXP_MKINT((int)fr.Pitch),
-       SEXP_MKINT((int)fr.Roll),
-       SEXP_MKINT((int)fr.Yaw)));
+    L3(SEXP_MKFLOAT(fr.Pitch),
+       SEXP_MKFLOAT(fr.Roll),
+       SEXP_MKFLOAT(fr.Yaw)));
 }
 
 FVector fvector_to_FVector(sexp fvector)
@@ -47,9 +47,9 @@ FVector fvector_to_FVector(sexp fvector)
   sexp y = ke_get_field(fvector, "y");
   sexp z = ke_get_field(fvector, "z");
   FVector fv = {
-    (float)SEXP_GET_INTEGER(x),
-    (float)SEXP_GET_INTEGER(y),
-    (float)SEXP_GET_INTEGER(z)
+    SEXP_GET_FLOAT(x),
+    SEXP_GET_FLOAT(y),
+    SEXP_GET_FLOAT(z)
   };
   return fv;
 }
@@ -60,9 +60,9 @@ FRotator frotator_to_FRotator(sexp frotator)
   sexp roll = ke_get_field(frotator, "roll");
   sexp yaw = ke_get_field(frotator, "yaw");
   FRotator fr = {
-    (float)SEXP_GET_INTEGER(pitch),
-    (float)SEXP_GET_INTEGER(roll),
-    (float)SEXP_GET_INTEGER(yaw)
+    SEXP_GET_FLOAT(pitch),
+    SEXP_GET_FLOAT(roll),
+    SEXP_GET_FLOAT(yaw)
   };
   return fr;
 }
@@ -134,7 +134,7 @@ KActor::KActor()
 float KActor::Tick(float DeltaTime)
 {
   sexp result = ke_call_method(kdelegate, "tick", L1(SEXP_MKINT((int)DeltaTime)));
-  float f = (float)SEXP_GET_INTEGER(result);
+  float f = SEXP_GET_FLOAT(result);
   KESD(result);
   return f;
 }

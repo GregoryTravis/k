@@ -493,3 +493,19 @@ sexp caddr( sexp s )
   s = car( s );
   return s;
 }
+
+sexp float_to_sexp(float f)
+{
+  fsu c;
+  c.s = 0;
+  c.f = f;
+  sexp s = c.s;
+  return ((s<<2)&~SEXP_TAG_BIT_MASK)|SEXP_FLOAT_TAG;
+}
+
+float sexp_to_float(sexp s)
+{
+  fsu c;
+  c.s = s>>2;
+  return c.f;
+}

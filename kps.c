@@ -75,7 +75,9 @@ static sexp pts( sexp p )
     if (!sscanf( STR(s), "%f", &f )) {
       err(( "Can't parse float %s\n", STR( s ) ));
     }
+    //printf("PARSE %s %f\n", STR(s), f);
     s = SEXP_MKFLOAT( f );
+    //SD(s);
     return sexp_build( "(const %)", s );
   } else if (sexp_scan( p, "(expression boolconst %)", &s )) {
     int b = !strcmp( STR(s), "true" );
