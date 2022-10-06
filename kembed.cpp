@@ -4,6 +4,7 @@
 #include "keval.h"
 #include "kexec.h"
 #include "kinit.h"
+#include "kobject.h"
 
 void ke_init(void)
 {
@@ -44,4 +45,16 @@ sexp ke_call_method(sexp obj, const char *method_name, sexp args)
   sexp result5 = ke_apply_compiled_function(result4, args);
   //KESD(result5);
   return result5;
+}
+
+sexp ke_get_field(sexp obj, const char *field_name)
+{
+  sexp result3 = ke_apply_compiled_function(obj,
+      sexp_build(strdup("(% get)"), mksym(strdup(field_name))));
+  //KESD(result3);
+  //sexp_dump_closure(result3);
+  sexp result4 = ke_apply_compiled_function(result3, nill);
+  //KESD(result4);
+  //sexp_dump_closure(result4);
+  return result4;
 }

@@ -40,12 +40,21 @@ FRotator KActor::GetActorRotation()
   return fr;
 }
 
+bool KActor::SetActorLocationAndRotation(FVector fv, FRotator fr)
+{
+  printf("SALAR got %f %f %f %f %f %f\n",
+      fv.X, fv.Y, fv.Z,
+      fr.Pitch, fr.Roll, fr.Yaw);
+  return true;
+}
+
 sexp FVector_to_fvector(KActor *kactor, FVector fv)
 {
-  return ke_call_constructor(kactor->fvector_class,
+  sexp r = ke_call_constructor(kactor->fvector_class,
     L3(SEXP_MKINT((int)fv.X),
        SEXP_MKINT((int)fv.Y),
        SEXP_MKINT((int)fv.Z)));
+  return r;
 }
 
 sexp FRotator_to_frotator(KActor *kactor, FRotator fr)
@@ -56,12 +65,31 @@ sexp FRotator_to_frotator(KActor *kactor, FRotator fr)
        SEXP_MKINT((int)fr.Yaw)));
 }
 
-/* FVector fvector_to_FVector(sexp fvector) */
-/* { */
-/*   sexp x = object_lookup(S("X" */
-/*   FVector fv; */
-/*   return fv; */
-/* } */
+FVector fvector_to_FVector(sexp fvector)
+{
+  sexp x = ke_get_field(fvector, "x");
+  sexp y = ke_get_field(fvector, "y");
+  sexp z = ke_get_field(fvector, "z");
+  FVector fv = {
+    (float)SEXP_GET_INTEGER(x),
+    (float)SEXP_GET_INTEGER(y),
+    (float)SEXP_GET_INTEGER(z)
+  };
+  return fv;
+}
+
+FRotator frotator_to_FRotator(sexp frotator)
+{
+  sexp pitch = ke_get_field(frotator, "pitch");
+  sexp roll = ke_get_field(frotator, "roll");
+  sexp yaw = ke_get_field(frotator, "yaw");
+  FRotator fr = {
+    (float)SEXP_GET_INTEGER(pitch),
+    (float)SEXP_GET_INTEGER(roll),
+    (float)SEXP_GET_INTEGER(yaw)
+  };
+  return fr;
+}
 
 sexp GetActorRotation_delegate_sexp_native(sexp arglist)
 {
@@ -85,7 +113,19 @@ sexp GetActorLocation_delegate_sexp_native(sexp arglist)
   return FVector_to_fvector(kactor, location);
 }
 
-//sexp SetActorLocationAndRotation_delegate_sexp_native(
+sexp SetActorLocationAndRotation_delegate_sexp_native(sexp arglist)
+{
+  A(length(arglist) == 3);
+
+  sexp kactor_sexp = car(arglist);
+  sexp location = cadr(arglist);
+  sexp rotation = caddr(arglist);
+  printf("OOOO %d %d\n", SEXP_TYPE(location), SEXP_TYPE(rotation));
+  KActor *kactor = (KActor*)SEXP_GET_OBJ(kactor_sexp);
+  FVector fv = fvector_to_FVector(location);
+  FRotator fr = frotator_to_FRotator(rotation);
+  return kactor->SetActorLocationAndRotation(fv, fr);
+}
 
 KActor::KActor()
 {
@@ -101,11 +141,15 @@ KActor::KActor()
     mknative(&GetActorLocation_delegate_sexp_native, strdup("GetActorLocation_delegate_sexp_native"));
   sexp GetActorRotation_delegate_sexp =
     mknative(&GetActorRotation_delegate_sexp_native, strdup("GetActorRotation_delegate_sexp_native"));
+  sexp SetActorLocationAndRotation_delegate_sexp =
+    mknative(&SetActorLocationAndRotation_delegate_sexp_native,
+        strdup("SetActorLocationAndRotation_delegate_sexp_native"));
   sexp super = ke_call_constructor(super_class,
-      L4(kthis,
+      L5(kthis,
          SetLocation_delegate_sexp,
          GetActorLocation_delegate_sexp,
-         GetActorRotation_delegate_sexp));
+         GetActorRotation_delegate_sexp,
+         SetActorLocationAndRotation_delegate_sexp));
 
   sexp clas = ke_exec_file("kactor.k");
   kdelegate = ke_call_constructor(clas, L1(super));

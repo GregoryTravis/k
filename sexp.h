@@ -31,7 +31,7 @@ typedef enum sexp_types {
   SEXP_SYMBOL,
   SEXP_INTEGER,
   SEXP_FLOAT, // 4
-  SEXP_CONS,
+  SEXP_CONS, // 5
   SEXP_HASH,
   SEXP_OBJ, // 7
   SEXP_NATIVE, // 8

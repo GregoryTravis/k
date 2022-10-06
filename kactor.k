@@ -27,8 +27,9 @@ class kactor
     show current_rotation.yaw;
     show "CURRENT rotation done\n";
 
-    var n2 = setLocation(1, 2, 3);
-    return n + n2;
+    super.setActorLocationAndRotation(current_location, current_rotation);
+
+    return 55;
   }
 
   public fun setLocation(x, y, z) {

@@ -24,6 +24,7 @@ public:
 
   FVector GetActorLocation();
   FRotator GetActorRotation();
+  bool SetActorLocationAndRotation(FVector fv, FRotator fr);
 
   float heightScale;
 
