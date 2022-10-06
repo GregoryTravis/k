@@ -100,6 +100,7 @@ sexp SetActorLocationAndRotation_delegate_sexp_native(sexp arglist)
   KActor *kactor = (KActor*)SEXP_GET_OBJ(kactor_sexp);
   FVector fv = fvector_to_FVector(location);
   FRotator fr = frotator_to_FRotator(rotation);
+  printf("AAA SALAR %f %f %f %f %f %f\n", fv.X, fv.Y, fv.Z, fr.Pitch, fr.Roll, fr.Yaw);
   return kactor->SetActorLocationAndRotation(fv, fr);
 }
 

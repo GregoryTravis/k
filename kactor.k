@@ -6,14 +6,14 @@ class kactor
     super = _super;
   }
 
-  public fun tick(n) {
+  public fun tick(deltaTime) {
     var current_location = super.getActorLocation();
     show "CURRENT LOCATION\n";
     show current_location;
     show current_location.x;
     show current_location.y;
     show current_location.z;
-    current_location.z = current_location.z * 10;
+    //current_location.z = current_location.z * 10;
     show current_location.z;
     show "CURRENT LOCATION done\n";
 
@@ -23,7 +23,7 @@ class kactor
     show current_rotation.roll;
     show current_rotation.pitch;
     show current_rotation.yaw;
-    current_rotation.yaw = current_rotation.yaw * 10;
+    current_rotation.yaw = current_rotation.yaw + 20; // (deltaTime * 20);
     show current_rotation.yaw;
     show "CURRENT rotation done\n";
 
