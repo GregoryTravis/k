@@ -1,4 +1,4 @@
-(make embed.a) 2>&1 | tee out
+(make release) 2>&1 | tee out
 exit
 
 (make engine && ./engine) 2>&1 | tee out

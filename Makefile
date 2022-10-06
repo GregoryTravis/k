@@ -31,6 +31,12 @@ COMMON_DEPS = kstruct.h
 EMBED_OBJS = kembed.o
 ENGINE_OBJS = $(EMBED_OBJS) KActor.o engine.o
 
+KACTOR_K_FILES = kactor.k super.k fvector.k frotator.k
+GAME_K_DIR = '/Users/gmt/Documents/Unreal Projects/HowTo_Components/Content/k'
+
+release: embed.a $(KACTOR_K_FILES)
+	cp $(KACTOR_K_FILES) $(GAME_K_DIR)
+
 k: $(K_OBJS)
 	@# $(CC) -Lgc6.0/.libs $(LDFLAGS) -o k $(K_OBJS) -lgc
 	$(CC) $(LDFLAGS) -o k $(K_OBJS)
