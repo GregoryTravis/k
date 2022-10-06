@@ -111,7 +111,8 @@ float sexp_to_float(sexp s);
 #define SEXP_FLOAT_TAG (0x02)
 
 #define SEXP_IS_INTEGER(s) ( ((s)&SEXP_INTEGER_TAG) == SEXP_INTEGER_TAG )
-#define SEXP_IS_FLOAT(s) ( ((s)&SEXP_FLOAT_TAG) == SEXP_FLOAT_TAG )
+//#define SEXP_IS_FLOAT(s) ( ((s)&SEXP_FLOAT_TAG) == SEXP_FLOAT_TAG )
+#define SEXP_IS_FLOAT(s) ( ((s)&SEXP_TAG_BIT_MASK) == SEXP_FLOAT_TAG )
 #define SEXP_IS_MANIFEST(s) ((s)&SEXP_TAG_BIT_MASK)
 
 #define SEXP_HEAP(s) ((sexp_heap*)(s))
@@ -137,9 +138,6 @@ float sexp_to_float(sexp s);
 #define SEXP_MKINT(i) (((i)<<1)|SEXP_INTEGER_TAG)
 //#define SEXP_MKFLOAT(f) ( (  ((sexp)(f))  &~SEXP_TAG_BIT_MASK) | SEXP_FLOAT_TAG )
 #define SEXP_MKFLOAT float_to_sexp
-//#define SEXP_MKFLOAT(f) ((sexp)( (  (float_to_int_noconvert(f))  &~SEXP_TAG_BIT_MASK) | SEXP_FLOAT_TAG ))
-//#define SEXP_MKFLOAT(f) ( ( (((sexp)(float_to_int_noconvert(f)))<<2)&~SEXP_TAG_BIT_MASK) | SEXP_FLOAT_TAG )
-//#define SEXP_MKFLOAT(f) ( (  (*((sexp*)(&f)))  &~SEXP_TAG_BIT_MASK) | SEXP_FLOAT_TAG )
 #define SEXP_MKOBJ(o) (mkobj((o)))
 #define SEXP_MKNATIVE(n) (mknative(&(n),#n))
 #define SEXP_MKBOOLEAN(b) ((b)?True:False)
@@ -147,11 +145,7 @@ float sexp_to_float(sexp s);
 #define SEXP_MKSTRING(s) (mkstring((s)))
 #define SEXP_GET_INTEGER(s) (A(SEXP_IS_INTEGER((s))),(((int)(s))>>1))
 //#define SEXP_GET_FLOAT(s) (A(SEXP_IS_FLOAT((s))),((float)((s)&~SEXP_FLOAT_TAG)))
-#define SEXP_GET_FLOAT sexp_to_float
-//#define SEXP_GET_FLOAT(s) (A(SEXP_IS_FLOAT((s))),(int_to_float_noconvert((s)&~SEXP_FLOAT_TAG)))
-//#define SEXP_GET_FLOAT(s) (A(SEXP_IS_FLOAT((s))),(int_to_float_noconvert((int)(((s)&~SEXP_FLOAT_TAG)>>2))))
-//#define SEXP_GET_FLOAT(s) (A(SEXP_IS_FLOAT((s))),(*  ((float*)(&((s)&~SEXP_FLOAT_TAG)))  ))
-//#define SEXP_GET_FLOAT(s) (A(SEXP_IS_FLOAT((s))),(*  ((float*)(&((s))))  ))
+#define SEXP_GET_FLOAT(s) (A(SEXP_IS_FLOAT((s))),sexp_to_float((s)))
 #define SEXP_GET_OBJ(s) (A(SEXP_IS_OBJ((s))),(((sexp_heap*)(s))->contents.obj.obj))
 #define SEXP_GET_NATIVE(s) (A(SEXP_IS_NATIVE((s))),(((sexp_heap*)(s))->contents.native.native))
 #define SEXP_GET_NATIVE_FUNCNAME(s) (A(SEXP_IS_NATIVE((s))),(((sexp_heap*)(s))->contents.native.funcname))

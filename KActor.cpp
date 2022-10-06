@@ -134,7 +134,6 @@ KActor::KActor()
 float KActor::Tick(float DeltaTime)
 {
   sexp result = ke_call_method(kdelegate, "tick", L1(SEXP_MKINT((int)DeltaTime)));
-  float f = SEXP_GET_FLOAT(result);
   KESD(result);
-  return f;
+  return SEXP_GET_FLOAT(result);
 }

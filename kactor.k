@@ -29,7 +29,7 @@ class kactor
 
     super.setActorLocationAndRotation(current_location, current_rotation);
 
-    return 55;
+    return 55.0;
   }
 
   public fun setLocation(x, y, z) {
