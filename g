@@ -1,7 +1,7 @@
-(make engine && ./engine) 2>&1 | tee out
+(make embed.a) 2>&1 | tee out
 exit
 
-(make embed.a) 2>&1 | tee out
+(make engine && ./engine) 2>&1 | tee out
 exit
 
 (make && k small.k) 2>&1 | tee out

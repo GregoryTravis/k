@@ -13,10 +13,13 @@ class kactor
     show current_location.x;
     show current_location.y;
     show current_location.z;
-    //current_location.z = current_location.z * 10;
+
     var elapsed = super.getGameTimeSinceCreation();
     show "ELAPSED\n";
     show elapsed;
+    var deltaHeight = sin(elapsed + deltaTime) - sin(elapsed);
+    current_location.z = current_location.z + deltaHeight * 20.0;
+
     show current_location.z;
     show "CURRENT LOCATION done\n";
 
