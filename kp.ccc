@@ -6,6 +6,7 @@ lex boolconst atom (true|false)
 lex nil atom (nil)
 lex identifier atom ([a-zA-Z_])([a-zA-Z_0-9])*
 lex integer atom ([0-9]+)
+lex float atom ([0-9]+)\.([0-9]+)
 lex equals atom [=]
 #lex level00 atom \.
 #lex level01 atom ! -[unary] ++ +[unary] *[unary] &[unary?]
@@ -95,6 +96,7 @@ parse expression:show "show" expression
 parse expression:yield "yield" expression
 #parse expression:if if
 parse expression:integer integer
+parse expression:float float
 parse expression:boolconst boolconst
 parse expression:nil nil
 parse expression:string string

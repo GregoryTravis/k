@@ -1,3 +1,6 @@
+(make && k small.k) 2>&1 | tee out
+exit
+
 (make embed.a) 2>&1 | tee out
 exit
 
@@ -5,9 +8,6 @@ exit
 exit
 
 (make && k kactor.k) 2>&1 | tee out
-exit
-
-(make && k small.k) 2>&1 | tee out
 exit
 
 (make clean && make) 2>&1 | tee out

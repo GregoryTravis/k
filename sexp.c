@@ -156,6 +156,19 @@ static void pprint( ostrm *ost, sexp s, int indent, int *advance, int *did_newli
         *advance += c;
       }
       break;
+    case SEXP_FLOAT:
+      {
+        int c = 0;
+        float f = SEXP_GET_FLOAT( s );
+        stprintf( ost, "%f", f );
+        // TODO not sure this is right and it definitely doesn't handle negative #s
+        while (f>0) {
+          c+=1;
+          f /= 2;
+        }
+        *advance += c;
+      }
+      break;
     case SEXP_CONS:
       {
         int did_newline_r = 0;

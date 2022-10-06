@@ -29,7 +29,7 @@ typedef enum sexp_types {
   SEXP_MIN=1,
   SEXP_NIL=SEXP_MIN,
   SEXP_SYMBOL,
-  SEXP_INTEGER,
+  SEXP_INTEGER, // 3
   SEXP_FLOAT, // 4
   SEXP_CONS, // 5
   SEXP_HASH,

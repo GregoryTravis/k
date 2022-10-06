@@ -70,6 +70,13 @@ static sexp pts( sexp p )
     }
     s = SEXP_MKINT( i );
     return sexp_build( "(const %)", s );
+  } else if (sexp_scan( p, "(expression float %)", &s )) {
+    float f;
+    if (!sscanf( STR(s), "%f", &f )) {
+      err(( "Can't parse float %s\n", STR( s ) ));
+    }
+    s = SEXP_MKFLOAT( f );
+    return sexp_build( "(const %)", s );
   } else if (sexp_scan( p, "(expression boolconst %)", &s )) {
     int b = !strcmp( STR(s), "true" );
     return sexp_build( "(const %)", SEXP_MKBOOLEAN( b ) );

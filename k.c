@@ -21,6 +21,8 @@ int main( int argc, char *argv[] )
 
     printf("Final result\n");
     SD(result);
+    printf("type %d\n", SEXP_TYPE(result));
+    printf("type %d\n", SEXP_TYPE(car(result)));
   }
 
   ksym_dump_reasons( "k.reasons.out" );
