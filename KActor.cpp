@@ -26,11 +26,10 @@ bool KActor::SetActorLocationAndRotation(FVector fv, FRotator fr)
 
 sexp FVector_to_fvector(KActor *kactor, FVector fv)
 {
-  sexp r = ke_call_constructor(kactor->fvector_class,
+  return ke_call_constructor(kactor->fvector_class,
     L3(SEXP_MKFLOAT(fv.X),
        SEXP_MKFLOAT(fv.Y),
        SEXP_MKFLOAT(fv.Z)));
-  return r;
 }
 
 sexp FRotator_to_frotator(KActor *kactor, FRotator fr)

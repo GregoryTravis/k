@@ -23,7 +23,7 @@ class kactor
     show current_rotation.roll;
     show current_rotation.pitch;
     show current_rotation.yaw;
-    current_rotation.yaw = current_rotation.yaw + 20; // (deltaTime * 20);
+    current_rotation.yaw = current_rotation.yaw + (deltaTime * 20.0);
     show current_rotation.yaw;
     show "CURRENT rotation done\n";
 
