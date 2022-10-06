@@ -10,6 +10,7 @@
 #include "kprim_boolean.h"
 #include "kprim_reflect.h"
 #include "kprim_object.h"
+#include "kprim_math.h"
 
 void kprim_add_prims( sexp env )
 {
@@ -37,6 +38,8 @@ void kprim_add_prims( sexp env )
   ADDPRIM( env, closure_get_code );
 
   ADDPRIM( env, object_lookup );
+
+  ADDPRIM( env, sin );
 
   kenv_global_put_env( env, mksym( "nill" ), nill );
 }

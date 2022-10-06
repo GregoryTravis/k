@@ -15,7 +15,8 @@ PARSER_OBJS = kp.yy.o kp.tab.o
 K_LIB = $(LIB_OBJS) $(PARSER_OBJS) kexec.o kfile.o kerr.o kps.o \
   kunparse.o keval.o kcps.o ksym.o kinit.o kprim.o kenv.o growbuf.o \
   strm.o sstrm.o fstrm.o kprim_numop.o kprim_list.o ksem.o sexputil.o \
-  kprim_import.o kprim_boolean.o kprim_reflect.o kobject.o kprim_object.o
+  kprim_import.o kprim_boolean.o kprim_reflect.o kobject.o kprim_object.o \
+  kprim_math.o
 
 K_OBJS = k.o $(K_LIB)
 
@@ -185,6 +186,9 @@ kobject.o: kobject.c kobject.h $(COMMON_DEPS)
 
 kprim_object.o: kprim_object.c kprim_object.h $(COMMON_DEPS)
 	$(CC) $(CFLAGS) -c kprim_object.c
+
+kprim_math.o: kprim_math.c kprim_math.h $(COMMON_DEPS)
+	$(CC) $(CFLAGS) -c kprim_math.c
 
 #kp.yy.o: kp.yy.c kp.yy.h $(COMMON_DEPS)
 kp.yy.o: kp.yy.c $(COMMON_DEPS)

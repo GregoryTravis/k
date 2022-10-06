@@ -1,1 +1,1 @@
-return 1.2;
+return sin(3.14 / 4);
