@@ -5,9 +5,9 @@
 int main(int argc, char **argv)
 {
   KActor ka;
-  float f = ka.Tick(125.0);
-  ka.Tick(125.0);
-  ka.Tick(125.0);
-  ka.Tick(125.0);
+  float f = ka.Tick(1.0);
+  ka.Tick(1.0);
+  ka.Tick(1.0);
+  ka.Tick(1.0);
   printf("hi %f\n", f);
 }

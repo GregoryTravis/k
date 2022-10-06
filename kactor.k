@@ -14,6 +14,9 @@ class kactor
     show current_location.y;
     show current_location.z;
     //current_location.z = current_location.z * 10;
+    var elapsed = super.getGameTimeSinceCreation();
+    show "ELAPSED\n";
+    show elapsed;
     show current_location.z;
     show "CURRENT LOCATION done\n";
 

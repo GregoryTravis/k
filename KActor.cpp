@@ -40,6 +40,15 @@ sexp FRotator_to_frotator(KActor *kactor, FRotator fr)
        SEXP_MKFLOAT(fr.Yaw)));
 }
 
+sexp GetGameTimeSinceCreation_delegate_sexp_native(sexp arglist)
+{
+    A(length(arglist) == 1);
+    sexp kactor_sexp = car(arglist);
+    KActor *kactor = (KActor*)SEXP_GET_OBJ(kactor_sexp);
+    float t = 37;
+    return SEXP_MKFLOAT(t);
+}
+
 FVector fvector_to_FVector(sexp fvector)
 {
   sexp x = ke_get_field(fvector, "x");
@@ -118,11 +127,15 @@ KActor::KActor()
   sexp SetActorLocationAndRotation_delegate_sexp =
     mknative(&SetActorLocationAndRotation_delegate_sexp_native,
         strdup("SetActorLocationAndRotation_delegate_sexp_native"));
+  sexp GetGameTimeSinceCreation_delegate_sexp =
+    mknative(&GetGameTimeSinceCreation_delegate_sexp_native,
+        strdup("GetGameTimeSinceCreation_delegate_sexp_native"));
   sexp super = ke_call_constructor(super_class,
-      L4(kthis,
+      L5(kthis,
          GetActorLocation_delegate_sexp,
          GetActorRotation_delegate_sexp,
-         SetActorLocationAndRotation_delegate_sexp));
+         SetActorLocationAndRotation_delegate_sexp,
+         GetGameTimeSinceCreation_delegate_sexp));
 
   sexp clas = ke_exec_file("kactor.k");
   kdelegate = ke_call_constructor(clas, L1(super));
