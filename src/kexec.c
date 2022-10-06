@@ -20,7 +20,7 @@ sexp k_prepare_file( char *filename )
 
   KERRPUNTV(nill);
 
-  sexp_dump_file( strkat( filename, ".parse.out" ), parse );
+  // sexp_dump_file( strkat( filename, ".parse.out" ), parse );
 
   sem = k_parse_to_semantic( parse );
 
@@ -29,7 +29,7 @@ sexp k_prepare_file( char *filename )
     KERRPUNTV(nill);
   }
 
-  sexp_dump_file( strkat( filename, ".presem.out" ), sem );
+  // sexp_dump_file( strkat( filename, ".presem.out" ), sem );
 
   sem = ksem_process( sem );
 
@@ -38,7 +38,7 @@ sexp k_prepare_file( char *filename )
     KERRPUNTV(nill);
   }
 
-  sexp_dump_file( strkat( filename, ".postsem.out" ), sem );
+  // sexp_dump_file( strkat( filename, ".postsem.out" ), sem );
 
   return sem;
 }

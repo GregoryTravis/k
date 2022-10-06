@@ -306,7 +306,7 @@ sexp k_eval( char *filename, sexp sem )
   sem = kcps_convert( sem, topk );
   A(sem);
 
-  sexp_dump_file( strkat( filename, ".cps.out" ), sem );
+  // sexp_dump_file( strkat( filename, ".cps.out" ), sem );
 
   KERRPUNTV(nill);
 
