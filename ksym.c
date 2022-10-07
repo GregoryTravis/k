@@ -30,6 +30,7 @@ void ksym_set_reason( sexp symbol, char *text, sexp info )
     reasons = nil;
 
   reasons = cons( L3( symbol, SEXP_MKSTRING( text ), info ), reasons );
+  sexp_pin(reasons);
 }
 
 void ksym_dump_reasons( char *filename )
