@@ -6,6 +6,8 @@
 #include "ksym.h"
 #include "sexp.h"
 
+static bool enabled = 0;
+
 static int unique_serial;
 
 static char *prefix = "__k_sym_";
@@ -26,6 +28,8 @@ sexp ksym_new_sym( void )
 
 void ksym_set_reason( sexp symbol, char *text, sexp info )
 {
+  if (!enabled) return;
+
   if (reasons==0)
     reasons = nil;
 
@@ -35,5 +39,7 @@ void ksym_set_reason( sexp symbol, char *text, sexp info )
 
 void ksym_dump_reasons( char *filename )
 {
+  if (!enabled) return;
+
   sexp_dump_file( filename, reasons );
 }

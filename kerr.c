@@ -56,6 +56,7 @@ static void vkerr( sexp where, char *f, va_list va )
     SEXP_MKSTRING( errstring ),
     where,
     errors );
+  sexp_pin(errors);
 }
 
 static void show_where( FILE *file, sexp where )

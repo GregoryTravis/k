@@ -15,21 +15,20 @@ int main( int argc, char *argv[] )
 
   k_init();
 
-  for (a=1; a<argc; ++a) {
-    int ret;
-    fprintf( stderr, "Running %s\n", argv[a] );
+  for (int i = 0; i < 100000; ++i) {
+    for (a=1; a<argc; ++a) {
+      int ret;
+      fprintf( stderr, "Running %s\n", argv[a] );
 
-    sexp result = k_exec_file( argv[a] );
+      sexp result = k_exec_file( argv[a] );
 
-    printf("Final result\n");
-    SD(result);
-    sexp_pin(result);
-    gc();
-    sexp_unpin(result);
-    gc();
-
-    /* sexp result2 = k_exec_file( argv[a] ); */
-    /* gc(result); */
+      printf("Final result\n");
+      SD(result);
+      sexp_pin(result);
+      gc();
+      sexp_unpin(result);
+      gc();
+    }
   }
 
   ksym_dump_reasons( "k.reasons.out" );

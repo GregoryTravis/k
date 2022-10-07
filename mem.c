@@ -96,7 +96,7 @@ void *memfill( void *dest, int c, int n )
 
 char *strdoop( char *s )
 {
-  char *ss = (char*)malik( strlen( s ) );
+  char *ss = (char*)malik( strlen( s ) + 1 );
   strcpy( ss, s );
 
   spew(( smem, "strdup 0x%x <- 0x%x\n", ss, s ));

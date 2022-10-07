@@ -11,7 +11,6 @@ extern "C"
 #include <stdio.h>
 
 #include "a.h"
-#include "gc.h"
 #include "strm.h"
 
 /*
@@ -43,6 +42,8 @@ typedef enum sexp_types {
 } sexp_types ;
 
 typedef long sexp;
+
+#include "gc.h"
 
 /* typedef struct hashentry { */
 /*   char *name; */

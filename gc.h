@@ -19,11 +19,18 @@ typedef enum gc_state {
   GC_MAX = GC_DEAD
 } gc_state ;
 
+extern bool gc_ok_enabled;
 void gc(void);
+bool gc_ok(sexp s);
 
 // Only for non-manifest
 #define GC_DEAD(s) (((sexp_heap*)(s))->gc_state == GC_DEAD)
-#define GC_OK(s) (SEXP_IS_MANIFEST((s)) || !GC_DEAD((s)))
+
+// Define only one
+// Fast
+// #define GC_OK(s) (gc_ok_enabled && SEXP_IS_MANIFEST((s)) || !GC_DEAD((s)))
+// Slow
+#define GC_OK gc_ok
 
 #ifdef __cplusplus
 } // extern "C"
