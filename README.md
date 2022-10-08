@@ -83,6 +83,8 @@ The grammar is then compiled to Flex and Bison source by a tool called [ccc (The
 
 The implementation includes a [library useful for embedding k in other binaries](src/kembed.cpp), which is used in [kActor, a prototype integration with Unreal Engine](https://github.com/GregoryTravis/kActor).
 
+It includes a small [Actor-like test harness](src/KActor.cpp) for developing outside the Unreal engine.
+
 ## TODO
 
 So many things, including
