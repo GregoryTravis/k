@@ -214,7 +214,8 @@ extern sexp False;
 #define L3(a,b,c) (cons((a),L2((b),(c))))
 #define L4(a,b,c,d) (cons((a),L3((b),(c),(d))))
 #define L5(a,b,c,d,e) (cons((a),L4((b),(c),(d),(e))))
-#define L6(a,b,c,d,e,f) (cons((a),L4((b),(c),(d),(e),(f))))
+#define L6(a,b,c,d,e,f) (cons((a),L5((b),(c),(d),(e),(f))))
+#define L7(a,b,c,d,e,f,g) (cons((a),L6((b),(c),(d),(e),(f),(g))))
 
 sexp mksym( char *name );
 

@@ -112,9 +112,25 @@ sexp SetActorLocationAndRotation_delegate_sexp_native(sexp arglist)
   return kactor->SetActorLocationAndRotation(fv, fr);
 }
 
+float KActor::GetHeightScale()
+{
+    return heightScale;
+}
+
+sexp GetHeightScale_delegate_sexp_native(sexp arglist)
+{
+    A(length(arglist) == 1);
+
+    sexp kactor_sexp = car(arglist);
+    KActor *kactor = (KActor*)SEXP_GET_OBJ(kactor_sexp);
+    return SEXP_MKFLOAT(kactor->GetHeightScale());
+}
+
 KActor::KActor()
 {
   ke_init();
+
+  heightScale = 20.0;
 
   sexp super_class = ke_exec_file("super.k");
   // KESD(super_class);
@@ -130,12 +146,16 @@ KActor::KActor()
   sexp GetGameTimeSinceCreation_delegate_sexp =
     mknative(&GetGameTimeSinceCreation_delegate_sexp_native,
         strdup("GetGameTimeSinceCreation_delegate_sexp_native"));
+  sexp GetHeightScale_delegate_sexp =
+    mknative(&GetHeightScale_delegate_sexp_native,
+        strdup("GetHeightScale_delegate_sexp_native"));
   sexp super = ke_call_constructor(super_class,
-      L5(kthis,
+      L6(kthis,
          GetActorLocation_delegate_sexp,
          GetActorRotation_delegate_sexp,
          SetActorLocationAndRotation_delegate_sexp,
-         GetGameTimeSinceCreation_delegate_sexp));
+         GetGameTimeSinceCreation_delegate_sexp,
+         GetHeightScale_delegate_sexp));
 
   sexp clas = ke_exec_file("kactor.k");
   kdelegate = ke_call_constructor(clas, L1(super));
