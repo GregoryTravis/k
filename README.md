@@ -61,7 +61,7 @@ All scoping is lexical, and even the object-level field/method scoping is done e
 
 ## Parser
 
-The parser uses Flex and Bison. The [grammar](src/kp.ccc) is written in a custom grammar langauge.
+The parser uses Flex and Bison. The [grammar](src/kp.ccc) is written in a custom grammar langauge:
 
 ```
 lex identifier atom ([a-zA-Z_])([a-zA-Z_0-9])*
