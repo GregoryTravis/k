@@ -25,7 +25,7 @@ UMM_K_OBJS = kfile.o keval.o kp.yy.o kp.tab.o kps.o kmisc.o kerr.o \
 
 PARSER_GENERATED = kp.c kp.output kp.tab.c kp.tab.h kp.exe kp.grammar \
   kp.y kp.l kp.yy.c kp.h kp.yy.c
-GENERATED = k k.a embed.a engine shavtest *.o $(PARSER_GENERATED)
+GENERATED = k k.a kembed.a engine shavtest *.o $(PARSER_GENERATED)
 COMMON_DEPS = kstruct.h
 
 EMBED_OBJS = kembed.o
@@ -34,7 +34,7 @@ ENGINE_OBJS = $(EMBED_OBJS) KActor.o engine.o
 KACTOR_K_FILES = kactor.k super.k fvector.k frotator.k
 GAME_K_DIR = '/Users/gmt/Documents/Unreal Projects/HowTo_Components/Content/k'
 
-release: embed.a $(KACTOR_K_FILES)
+release: kembed.a $(KACTOR_K_FILES)
 	cp $(KACTOR_K_FILES) $(GAME_K_DIR)
 
 k: $(K_OBJS)
@@ -44,8 +44,8 @@ k: $(K_OBJS)
 k.a: $(K_OBJS)
 	libtool -static -o k.a $(K_OBJS)
 
-embed.a: ${K_OBJS} $(EMBED_OBJS)
-	libtool -static -o embed.a $(K_OBJS) $(EMBED_OBJS)
+kembed.a: ${K_OBJS} $(EMBED_OBJS)
+	libtool -static -o kembed.a $(K_OBJS) $(EMBED_OBJS)
 
 engine: $(K_LIB) $(ENGINE_OBJS)
 	$(CPP) $(LDFLAGS) -o engine $(K_LIB) $(ENGINE_OBJS)
