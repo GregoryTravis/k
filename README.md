@@ -55,7 +55,7 @@ Excution of a k program goes through the following phases:
 * Continuation-passing-style conversion
 * Lambda calculus interpreter
 
-All internal representations, from the parse tree to the final cps-style executable expression, are based on a rich [S-expression data structure](src/sexp.c).
+All internal representations, from the parse tree to the final cps-style executable expression, are based on a rich [S-expression data structure](src/sexp.c). (sexp uses the classic Scheme implementation method of storing tag bits in the least significant pointer bits, to avoid allocations for ints and floats.)
 
 All scoping is lexical, and even the object-level field/method scoping is done entirely with lambda scoping constructs.
 
