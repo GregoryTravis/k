@@ -59,6 +59,8 @@ All internal representations, from the parse tree to the final cps-style executa
 
 All scoping is lexical, and even the object-level field/method scoping is done entirely with lambda scoping constructs.
 
+k has a still-in-progress garbage collector; most interpreter allocations are collected, but a few are not.
+
 ## Parser
 
 The parser uses Flex and Bison. The [grammar](src/kp.ccc) is written in a custom grammar langauge:
@@ -91,4 +93,3 @@ So many things, including
 
 * Inheritance
 * A debugger
-* Garbage collection \[**in progress**\]
