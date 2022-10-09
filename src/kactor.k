@@ -19,6 +19,7 @@ class kactor
     current_rotation.yaw = current_rotation.yaw + (deltaTime * rotationSpeed);
 
     super.setActorLocationAndRotation(current_location, current_rotation);
+    return nill;
   }
 }
 

@@ -126,11 +126,26 @@ sexp GetHeightScale_delegate_sexp_native(sexp arglist)
     return SEXP_MKFLOAT(kactor->GetHeightScale());
 }
 
+sexp GetRotationSpeed_delegate_sexp_native(sexp arglist)
+{
+    A(length(arglist) == 1);
+
+    sexp kactor_sexp = car(arglist);
+    KActor *kactor = (KActor*)SEXP_GET_OBJ(kactor_sexp);
+    return SEXP_MKFLOAT(kactor->GetRotationSpeed());
+}
+
+float KActor::GetRotationSpeed()
+{
+    return rotationSpeed;
+}
+
 KActor::KActor()
 {
   ke_init();
 
   heightScale = 20.0;
+  rotationSpeed = 20.0;
 
   sexp super_class = ke_exec_file("super.k");
   // KESD(super_class);
@@ -149,13 +164,17 @@ KActor::KActor()
   sexp GetHeightScale_delegate_sexp =
     mknative(&GetHeightScale_delegate_sexp_native,
         strdup("GetHeightScale_delegate_sexp_native"));
+  sexp GetRotationSpeed_delegate_sexp =
+    mknative(&GetRotationSpeed_delegate_sexp_native,
+        strdup("GetRotationSpeed_delegate_sexp_native"));
   sexp super = ke_call_constructor(super_class,
-      L6(kthis,
+      L7(kthis,
          GetActorLocation_delegate_sexp,
          GetActorRotation_delegate_sexp,
          SetActorLocationAndRotation_delegate_sexp,
          GetGameTimeSinceCreation_delegate_sexp,
-         GetHeightScale_delegate_sexp));
+         GetHeightScale_delegate_sexp,
+         GetRotationSpeed_delegate_sexp));
 
   sexp clas = ke_exec_file("kactor.k");
   kdelegate = ke_call_constructor(clas, L1(super));
@@ -163,9 +182,7 @@ KActor::KActor()
   frotator_class = ke_exec_file("frotator.k");
 }
 
-float KActor::Tick(float DeltaTime)
+void KActor::Tick(float DeltaTime)
 {
-  sexp result = ke_call_method(kdelegate, "tick", L1(SEXP_MKINT((int)DeltaTime)));
-  KESD(result);
-  return SEXP_GET_FLOAT(result);
+  ke_call_method(kdelegate, "tick", L1(SEXP_MKINT((int)DeltaTime)));
 }
