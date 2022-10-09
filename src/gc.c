@@ -6,6 +6,8 @@
 #include "mem.h"
 #include "sexp.h"
 
+static bool verbose = 0;
+
 typedef enum gc_realness {
   // Must preserve order
   GC_DEV = 1,   // Don't free; don't remove from chain
@@ -170,11 +172,11 @@ void stats(void)
 void gc(void)
 {
   walk_allocated(&set_to_start);
-  stats();
+  if (verbose) stats();
   walk_allocated(&mark_pinned_in_use);
-  stats();
+  if (verbose) stats();
   walk_allocated(&set_not_in_use_to_dead);
-  stats();
+  if (verbose) stats();
   free_dead();
-  stats();
+  if (verbose) stats();
 }
