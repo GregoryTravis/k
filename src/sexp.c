@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include "fstrm.h"
+#include "hash.h"
 #include "mem.h"
 #include "sexp.h"
 #include "spew.h"
@@ -15,11 +16,14 @@
 
 static int (*obj_dumper)( ostrm *ost, void *stuff ) = 0;
 
-sexp_heap _nill = { SEXP_NIL, NULL, CONST_NIL };
+sexp_heap _nill = { SEXP_NIL, NULL, NULL, 0, 0, CONST_NIL };
 sexp nill = (sexp)&_nill;
 
 SEXP_STATIC_SEXP(True,SEXP_BOOLEAN);
 SEXP_STATIC_SEXP(False,SEXP_BOOLEAN);
+
+// For GC
+sexp_heap *sexp_allocated = NULL;
 
 static sexp_heap *new_sexp_heap( void )
 {
@@ -27,25 +31,35 @@ static sexp_heap *new_sexp_heap( void )
 
   A(!(((long)sh)&SEXP_TAG_BIT_MASK)); // must have tag bits empty
 
+  sh->gc_next = 0;
+  sh->gc_state = 0;
+  sh->gc_pinned = 0;
   sh->properties = nill;
+
+  // Add to allocation chain
+  sh->gc_next = sexp_allocated;
+  sexp_allocated = sh;
 
   return sh;
 }
 
 sexp *_car(sexp s)
 {
+  GCA(s);
   A(SEXP_IS_CONS((s)));
   return &(SEXP_HEAP((s))->contents.cons.car);
 }
 
 sexp *_cdr(sexp s)
 {
+  GCA(s);
   A(SEXP_IS_CONS((s)));
   return &(SEXP_HEAP((s))->contents.cons.cdr);
 }
 
 sexp *sexp_properties(sexp s)
 {
+  GCA(s);
   A((s) && !SEXP_IS_MANIFEST((s)));
   return &(((sexp_heap*)(s))->properties);
 }
@@ -54,7 +68,9 @@ sexp cons( sexp car, sexp cdr )
 {
   sexp_heap *pair;
 
+  GCA(car);
   A(SEXP_OK(car));
+  GCA(cdr);
   A(SEXP_OK(cdr));
 
   pair = new_sexp_heap();
@@ -508,4 +524,84 @@ float sexp_to_float(sexp s)
   fsu c;
   c.s = s>>2;
   return c.f;
+}
+
+void walk1(hash *h, sexp s, void (*f)(sexp))
+{
+  A(s);
+  A(SEXP_OK(s));
+
+  if (hashget(h, s) == s) {
+    // Already seen
+    return;
+  }
+
+  hashput(h, s, s);
+  f(s);
+
+  switch (SEXP_TYPE(s)) {
+    case SEXP_NIL:
+    case SEXP_INTEGER:
+    case SEXP_FLOAT:
+    case SEXP_SYMBOL:
+    case SEXP_OBJ:
+    case SEXP_NATIVE:
+    case SEXP_STRING:
+    case SEXP_BOOLEAN:
+      // nothing
+      break;
+    case SEXP_CONS:
+      if (!SEXP_IS_MANIFEST(car(s))) {
+        walk1(h, car(s), f);
+      }
+      if (!SEXP_IS_MANIFEST(cdr(s))) {
+        walk1(h, cdr(s), f);
+      }
+      break;
+    case SEXP_CLOSURE:
+      if (!SEXP_IS_MANIFEST(SEXP_GET_CLOSURE_CODE(s))) {
+        walk1(h, SEXP_GET_CLOSURE_CODE(s), f);
+      }
+      if (!SEXP_IS_MANIFEST(SEXP_GET_CLOSURE_ENV(s))) {
+        walk1(h, SEXP_GET_CLOSURE_ENV(s), f);
+      }
+      break;
+    default:
+      err(("Walk: bad sexp type %d\n", SEXP_TYPE(s)));
+      break;
+  }
+}
+
+void walk(sexp s, void (*f)(sexp))
+{
+  hash *h = makehash(1024);
+
+  walk1(h, s, f);
+
+  // TODO
+  // freehash(h);
+}
+
+// This is ok because a sexp_heap ptr is a sexp
+void walk_sexp_heap(sexp_heap *sh, void (*f)(sexp_heap*))
+{
+  walk((sexp)sh, (void (*)(sexp))f);
+}
+
+void sexp_pin_set(sexp s, int state)
+{
+  A(s);
+  A(SEXP_OK(s));
+  A(!SEXP_IS_MANIFEST(s));
+  ((sexp_heap*)s)->gc_pinned = state;
+}
+
+void sexp_pin(sexp s)
+{
+  sexp_pin_set(s, 1);
+}
+
+void sexp_unpin(sexp s)
+{
+  sexp_pin_set(s, 0);
 }

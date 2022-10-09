@@ -29,6 +29,7 @@ void k_eval_init( void )
     return;
 
   global_env = kenv_make_env();
+  sexp_pin(global_env);
   kprim_add_prims( global_env );
 
   initted = 1;

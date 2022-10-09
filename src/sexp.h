@@ -43,10 +43,12 @@ typedef enum sexp_types {
 
 typedef long sexp;
 
-typedef struct hashentry {
-  char *name;
-  sexp value;
-} hashentry ;
+#include "gc.h"
+
+/* typedef struct hashentry { */
+/*   char *name; */
+/*   sexp value; */
+/* } hashentry ; */
 
 typedef sexp (*sexp_native)( sexp arglist );
 
@@ -57,19 +59,21 @@ typedef struct sexp_heap {
       char *name;
     } symbol;
 
-    struct {
-      int value;
-    } integer;
+    // Not used?
+    /* struct { */
+    /*   int value; */
+    /* } integer; */
 
     struct {
       sexp car;
       sexp cdr;
     } cons;
 
-    struct {
-      int size;
-      hashentry *entries;
-    } hash;
+    // Not used?
+    /* struct { */
+    /*   int size; */
+    /*   hashentry *entries; */
+    /* } hash; */
 
     struct {
       void *obj;
@@ -91,8 +95,22 @@ typedef struct sexp_heap {
     } string;
   } contents;
 
+  // GC stuff
+  // Linked list threaded through all unfreed sexp_heaps
+  struct sexp_heap *gc_next;
+  // See GC for values
+  int gc_state;
+  // Root?
+  int gc_pinned;
+
   sexp properties;
 } sexp_heap ;
+
+// For GC
+extern sexp_heap *sexp_allocated;
+extern void sexp_pin(sexp s);
+extern void sexp_unpin(sexp s);
+#define GCA(s) (A((s) && GC_OK((s))))
 
 #include "sbuild.h"
 #include "sparse.h"
@@ -124,6 +142,7 @@ float sexp_to_float(sexp s);
       (SEXP_HEAP_TYPE((s))))
 #define SEXP_TYPE_OK(t) ((t)>=SEXP_MIN && (t)<=SEXP_MAX)
 #define SEXP_OK(s) (((s)!=0)&&(SEXP_TYPE_OK(SEXP_TYPE((s)))))
+#define SEXP_HASH_OK(sh) (((sh)!=0)&&(SEXP_TYPE_OK(SEXP_TYPE(((sexp)sh)))))
 
 #define SEXP_IS_NIL(s) (A((s)),((s)==nill))
 #define SEXP_IS_SYMBOL(s) (A((s)),(SEXP_TYPE((s))==SEXP_SYMBOL))
@@ -145,15 +164,15 @@ float sexp_to_float(sexp s);
 #define SEXP_MKSTRING(s) (mkstring((s)))
 #define SEXP_GET_INTEGER(s) (A(SEXP_IS_INTEGER((s))),(((int)(s))>>1))
 //#define SEXP_GET_FLOAT(s) (A(SEXP_IS_FLOAT((s))),((float)((s)&~SEXP_FLOAT_TAG)))
-#define SEXP_GET_FLOAT(s) (A(SEXP_IS_FLOAT((s))),sexp_to_float((s)))
-#define SEXP_GET_OBJ(s) (A(SEXP_IS_OBJ((s))),(((sexp_heap*)(s))->contents.obj.obj))
-#define SEXP_GET_NATIVE(s) (A(SEXP_IS_NATIVE((s))),(((sexp_heap*)(s))->contents.native.native))
-#define SEXP_GET_NATIVE_FUNCNAME(s) (A(SEXP_IS_NATIVE((s))),(((sexp_heap*)(s))->contents.native.funcname))
-#define SEXP_GET_BOOLEAN(s) (A(SEXP_IS_BOOLEAN((s))),((s)==True))
-#define SEXP_GET_CLOSURE_CODE(s) (A(SEXP_IS_CLOSURE((s))),(((sexp_heap*)(s))->contents.closure.code))
-#define SEXP_GET_CLOSURE_ENV(s) (A(SEXP_IS_CLOSURE((s))),(((sexp_heap*)(s))->contents.closure.env))
-#define SEXP_GET_CLOSURE_NAME(s) (A(SEXP_IS_CLOSURE((s))),(((sexp_heap*)(s))->contents.closure.name))
-#define SEXP_GET_STRING(s) (A(SEXP_IS_STRING((s))),(((sexp_heap*)(s))->contents.string.string))
+#define SEXP_GET_FLOAT(s) (GCA((s)),A(SEXP_IS_FLOAT((s))),sexp_to_float((s)))
+#define SEXP_GET_OBJ(s) (GCA((s)),A(SEXP_IS_OBJ((s))),(((sexp_heap*)(s))->contents.obj.obj))
+#define SEXP_GET_NATIVE(s) (GCA((s)),A(SEXP_IS_NATIVE((s))),(((sexp_heap*)(s))->contents.native.native))
+#define SEXP_GET_NATIVE_FUNCNAME(s) (GCA((s)),A(SEXP_IS_NATIVE((s))),(((sexp_heap*)(s))->contents.native.funcname))
+#define SEXP_GET_BOOLEAN(s) (GCA((s)),A(SEXP_IS_BOOLEAN((s))),((s)==True))
+#define SEXP_GET_CLOSURE_CODE(s) (GCA((s)),A(SEXP_IS_CLOSURE((s))),(((sexp_heap*)(s))->contents.closure.code))
+#define SEXP_GET_CLOSURE_ENV(s) (GCA((s)),A(SEXP_IS_CLOSURE((s))),(((sexp_heap*)(s))->contents.closure.env))
+#define SEXP_GET_CLOSURE_NAME(s) (GCA((s)),A(SEXP_IS_CLOSURE((s))),(((sexp_heap*)(s))->contents.closure.name))
+#define SEXP_GET_STRING(s) (GCA((s)),A(SEXP_IS_STRING((s))),(((sexp_heap*)(s))->contents.string.string))
 
 /* #define SEXP_PROPERTIES(s) (A((s) && !SEXP_IS_MANIFEST((s))),(((sexp_heap*)(s))->properties)) */
 #define SEXP_PROPERTIES(s) (*(sexp_properties((s))))
@@ -161,7 +180,7 @@ extern sexp *sexp_properties(sexp s);
 
 #define SEXP_STRING_LENGTH(s) (strlen(SEXP_GET_STRING((s))))
 
-#define STR(s) (A(SEXP_IS_SYMBOL(s)),(SEXP_HEAP((s))->contents.symbol.name))
+#define STR(s) (GCA((s)),A(SEXP_IS_SYMBOL(s)),(SEXP_HEAP((s))->contents.symbol.name))
 #define S(s) (mksym(#s))
 #define EQ(s0,s1) ((SEXP_IS_SYMBOL((s0))&&SEXP_IS_SYMBOL((s1))) ? \
                    (!strcmp(STR((s0)),STR((s1)))) : ((s0)==(s1)))
@@ -190,6 +209,9 @@ sexp cdar( sexp s );
 sexp cddr( sexp s );
 sexp caddr( sexp s );
 
+void walk(sexp s, void (*f)(sexp));
+void walk_sexp_heap(sexp_heap *sh, void (*f)(sexp_heap*));
+
 sexp mkobj( void *obj );
 sexp mknative( sexp_native native, char *funcname );
 sexp mkclosure( sexp code, sexp env, char *name );
@@ -198,10 +220,10 @@ sexp mkstring( char *string );
 #define SEXP_IS_ATOM(s) (A(SEXP_OK((s))), !SEXP_IS_CONS((s)))
 
 #define SEXP_STATIC_SEXP(varname,type) \
-  static sexp_heap __##varname = { type, NULL, CONST_NIL }; sexp varname = (sexp)&__##varname
+  static sexp_heap __##varname = { type, NULL, NULL, 0, 0, CONST_NIL }; sexp varname = (sexp)&__##varname
 
 #define SEXP_STATIC_SYMBOL(varname,symname) \
-  sexp_heap _##varname = { SEXP_SYMBOL, #symname, CONST_NIL }; sexp varname = (sexp)&_##varname
+  sexp_heap _##varname = { SEXP_SYMBOL, #symname, NULL, 0, 0, CONST_NIL }; sexp varname = (sexp)&_##varname
 
 extern sexp nill;
 extern sexp_heap _nill;

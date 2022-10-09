@@ -1,5 +1,3 @@
-include "object.k";
-
 class ssink
 {
   public fun ssink() {

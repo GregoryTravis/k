@@ -16,7 +16,7 @@ K_LIB = $(LIB_OBJS) $(PARSER_OBJS) kexec.o kfile.o kerr.o kps.o \
   kunparse.o keval.o kcps.o ksym.o kinit.o kprim.o kenv.o growbuf.o \
   strm.o sstrm.o fstrm.o kprim_numop.o kprim_list.o ksem.o sexputil.o \
   kprim_import.o kprim_boolean.o kprim_reflect.o kobject.o kprim_object.o \
-  kprim_math.o
+  kprim_math.o hash.o gc.o
 
 K_OBJS = k.o $(K_LIB)
 
@@ -174,6 +174,12 @@ kprim_list.o: kprim_list.c kprim_list.h $(COMMON_DEPS)
 
 ksem.o: ksem.c ksem.h $(COMMON_DEPS)
 	$(CC) $(CFLAGS) -c ksem.c
+
+hash.o: hash.c hash.h $(COMMON_DEPS)
+	$(CC) $(CFLAGS) -c hash.c
+
+gc.o: gc.c gc.h $(COMMON_DEPS)
+	$(CC) $(CFLAGS) -c gc.c
 
 sexputil.o: sexputil.c sexputil.h $(COMMON_DEPS)
 	$(CC) $(CFLAGS) -c sexputil.c

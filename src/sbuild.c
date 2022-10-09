@@ -58,7 +58,9 @@ compiled *sexp_find_build_compiled( char *format )
     compileds = (compiled **)malik( sizeof(*compileds)*++n_compileds );
   }
 
-  compileds[n_compileds-1] = sexp_build_compile( format );
+  compiled *cmp = sexp_build_compile( format );
+  sexp_pin(cmp->template);
+  compileds[n_compileds-1] = cmp;
   return compileds[n_compileds-1];
 }
 
