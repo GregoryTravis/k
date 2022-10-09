@@ -148,8 +148,10 @@ KActor::KActor()
   rotationSpeed = 20.0;
 
   sexp super_class = ke_exec_file("super.k");
+  ke_gc_pin(super_class);
   // KESD(super_class);
   sexp kthis = SEXP_MKOBJ(this);
+  ke_gc_pin(kthis);
 
   sexp GetActorLocation_delegate_sexp =
     mknative(&GetActorLocation_delegate_sexp_native, strdup("GetActorLocation_delegate_sexp_native"));
@@ -175,14 +177,21 @@ KActor::KActor()
          GetGameTimeSinceCreation_delegate_sexp,
          GetHeightScale_delegate_sexp,
          GetRotationSpeed_delegate_sexp));
+  ke_gc_pin(super);
 
   sexp clas = ke_exec_file("kactor.k");
+  ke_gc_pin(clas);
   kdelegate = ke_call_constructor(clas, L1(super));
+  ke_gc_pin(kdelegate);
   fvector_class = ke_exec_file("fvector.k");
+  ke_gc_pin(fvector_class);
   frotator_class = ke_exec_file("frotator.k");
+  ke_gc_pin(frotator_class);
 }
 
 void KActor::Tick(float DeltaTime)
 {
   ke_call_method(kdelegate, "tick", L1(SEXP_MKINT((int)DeltaTime)));
+  int count = ke_gc();
+  printf("GC: %d\n", count);
 }

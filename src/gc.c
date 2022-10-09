@@ -103,9 +103,10 @@ void set_not_in_use_to_dead(sexp_heap *sh)
   }
 }
 
-void free_dead()
+int free_dead()
 {
   A(realness >= GC_DEV && realness <= GC_PROD);
+  int count = 0;
 
   sexp_heap **prev = &sexp_allocated;
   sexp_heap *here = sexp_allocated;
@@ -127,12 +128,16 @@ void free_dead()
           fri(orig_here);
         }
       }
+
+      count++;
     } else {
       // Just advance
       prev = &here->gc_next;
       here = here->gc_next;
     }
   }
+
+  return count;
 }
 
 typedef struct {
@@ -169,7 +174,7 @@ void stats(void)
   stats_dump(&the_stats);
 }
 
-void gc(void)
+int gc(void)
 {
   walk_allocated(&set_to_start);
   if (verbose) stats();
@@ -177,6 +182,7 @@ void gc(void)
   if (verbose) stats();
   walk_allocated(&set_not_in_use_to_dead);
   if (verbose) stats();
-  free_dead();
+  int count = free_dead();
   if (verbose) stats();
+  return count;
 }

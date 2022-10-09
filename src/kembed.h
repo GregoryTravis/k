@@ -16,5 +16,8 @@ sexp ke_apply_compiled_function(sexp compiled_function, sexp args);
 sexp ke_call_constructor(sexp ctor, sexp args);
 sexp ke_call_method(sexp obj, const char *method_name, sexp args);
 sexp ke_get_field(sexp obj, const char *field_name);
+int ke_gc();
+sexp ke_gc_pin(sexp s);
+sexp ke_gc_unpin(sexp s);
 
 #endif /* _kembed_h_ */

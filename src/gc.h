@@ -20,7 +20,7 @@ typedef enum gc_state {
 } gc_state ;
 
 extern bool gc_ok_enabled;
-void gc(void);
+int gc(void);
 bool gc_ok(sexp s);
 
 // Only for non-manifest

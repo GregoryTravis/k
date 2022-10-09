@@ -5,6 +5,7 @@
 #include "kexec.h"
 #include "kinit.h"
 #include "kobject.h"
+#include "gc.h"
 
 void ke_init(void)
 {
@@ -57,4 +58,21 @@ sexp ke_get_field(sexp obj, const char *field_name)
   //KESD(result4);
   //sexp_dump_closure(result4);
   return result4;
+}
+
+int ke_gc()
+{
+  return gc();
+}
+
+sexp ke_gc_pin(sexp s)
+{
+  sexp_pin(s);
+  return s;
+}
+
+sexp ke_gc_unpin(sexp s)
+{
+  sexp_unpin(s);
+  return s;
 }
