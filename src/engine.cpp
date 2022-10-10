@@ -9,4 +9,9 @@ int main(int argc, char **argv)
   ka.Tick(1.0);
   ka.Tick(1.0);
   ka.Tick(1.0);
+  ka.FinishDestroy();
+  int count = ke_gc();
+  printf("Final gc %d\n", count);
+  count = ke_gc();
+  printf("Final gc %d\n", count);
 }

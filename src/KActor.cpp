@@ -147,10 +147,10 @@ KActor::KActor()
   heightScale = 20.0;
   rotationSpeed = 20.0;
 
-  sexp super_class = ke_exec_file("super.k");
+  super_class = ke_exec_file("super.k");
   ke_gc_pin(super_class);
   // KESD(super_class);
-  sexp kthis = SEXP_MKOBJ(this);
+  kthis = SEXP_MKOBJ(this);
   ke_gc_pin(kthis);
 
   sexp GetActorLocation_delegate_sexp =
@@ -169,7 +169,7 @@ KActor::KActor()
   sexp GetRotationSpeed_delegate_sexp =
     mknative(&GetRotationSpeed_delegate_sexp_native,
         strdup("GetRotationSpeed_delegate_sexp_native"));
-  sexp super = ke_call_constructor(super_class,
+  super = ke_call_constructor(super_class,
       L7(kthis,
          GetActorLocation_delegate_sexp,
          GetActorRotation_delegate_sexp,
@@ -179,7 +179,7 @@ KActor::KActor()
          GetRotationSpeed_delegate_sexp));
   ke_gc_pin(super);
 
-  sexp clas = ke_exec_file("kactor.k");
+  clas = ke_exec_file("kactor.k");
   ke_gc_pin(clas);
   kdelegate = ke_call_constructor(clas, L1(super));
   ke_gc_pin(kdelegate);
@@ -194,4 +194,22 @@ void KActor::Tick(float DeltaTime)
   ke_call_method(kdelegate, "tick", L1(SEXP_MKINT((int)DeltaTime)));
   int count = ke_gc();
   printf("GC: %d\n", count);
+}
+
+void KActor::FinishDestroy()
+{
+  ke_gc_unpin(super_class);
+  super_class = 0;
+  ke_gc_unpin(kthis);
+  kthis = 0;
+  ke_gc_unpin(super);
+  super = 0;
+  ke_gc_unpin(clas);
+  clas = 0;
+  ke_gc_unpin(kdelegate);
+  kdelegate = 0;
+  ke_gc_unpin(fvector_class);
+  fvector_class = 0;
+  ke_gc_unpin(frotator_class);
+  frotator_class = 0;
 }
