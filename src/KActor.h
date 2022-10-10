@@ -21,6 +21,7 @@ public:
 
   virtual void Tick(float DeltaTime);
 
+  void GC();
   // Do not use the object after you call this (meant to be called internall by
   // the engine)
   virtual void FinishDestroy();
@@ -44,4 +45,6 @@ private:
   sexp kthis;
   sexp super;
   sexp clas;
+
+  int tick_index;
 };

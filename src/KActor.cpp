@@ -4,6 +4,8 @@
 
 #include "kembed.h"
 
+#define GC_FREQUENCY 100
+
 FVector KActor::GetActorLocation()
 {
   FVector fv = { 1.0, 2.0, 3.0 };
@@ -144,6 +146,8 @@ KActor::KActor()
 {
   ke_init();
 
+  tick_index = 0;
+
   heightScale = 20.0;
   rotationSpeed = 20.0;
 
@@ -192,8 +196,16 @@ KActor::KActor()
 void KActor::Tick(float DeltaTime)
 {
   ke_call_method(kdelegate, "tick", L1(SEXP_MKINT((int)DeltaTime)));
-  int count = ke_gc();
-  printf("GC: %d\n", count);
+  GC();
+}
+
+void KActor::GC()
+{
+  if ((tick_index % GC_FREQUENCY) == 0) {
+    int count = ke_gc();
+    printf("GC: %d %d\n", tick_index, count);
+  }
+  tick_index++;
 }
 
 void KActor::FinishDestroy()
