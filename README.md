@@ -90,11 +90,13 @@ It includes a small [Actor-like test harness](src/KActor.cpp) for developing out
 
 ## Building
 
+```
 $ git clone git@github.com:GregoryTravis/k.git
 $ cd k/src
 $ . setup
 $ make k
 $ k fib.k
+```
 
 ## TODO
 
