@@ -54,6 +54,7 @@ Excution of a k program goes through the following phases:
 * Semantic tree -> lambda calculus
 * Continuation-passing-style conversion
 * Lambda calculus interpreter
+* Garbage collection
 
 All internal representations, from the parse tree to the final cps-style executable expression, are based on a rich [S-expression data structure](src/sexp.c). (sexp uses the classic Scheme implementation method of storing tag bits in the least significant pointer bits, to avoid allocations for ints and floats.)
 
@@ -86,6 +87,14 @@ The grammar is then compiled to Flex and Bison source by a tool called [ccc (The
 The implementation includes a [library useful for embedding k in other binaries](src/kembed.cpp), which is used in [kActor, a prototype integration with Unreal Engine](https://github.com/GregoryTravis/kActor).
 
 It includes a small [Actor-like test harness](src/KActor.cpp) for developing outside the Unreal engine.
+
+## Building
+
+$ git clone git@github.com:GregoryTravis/k.git
+$ cd k/src
+$ . setup
+$ make k
+$ k fib.k
 
 ## TODO
 
